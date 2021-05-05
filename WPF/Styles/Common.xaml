@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Colors -->
+    <Color x:Key="ColorPrimary1">White</Color>
+    <Color x:Key="ColorPrimary2">LightGray</Color>
+    <Color x:Key="ColorPrimary3">LightYellow</Color>
+
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="BrushPrimary1" Color="{StaticResource ColorPrimary1}" />
+    <SolidColorBrush x:Key="BrushPrimary2" Color="{StaticResource ColorPrimary2}" />
+    <SolidColorBrush x:Key="BrushPrimary3" Color="{StaticResource ColorPrimary3}" />
+
+    <!-- Images -->
+    <Image x:Key="ImageFolder" Source="../Resources/folder.png" Stretch="UniformToFill" />
+    <Image x:Key="ImageUser" Source="../Resources/user.png" Stretch="UniformToFill" />
+
+    <!-- Buttons -->
+    <Style x:Key="StyleNavigationButton" TargetType="Button">
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Padding" Value="4"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="BorderInner"  Background="{StaticResource BrushPrimary2}"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Padding" Value="2" />
+                            <Setter Property="Background" Value="{StaticResource BrushPrimary1}" TargetName="BorderInner" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
