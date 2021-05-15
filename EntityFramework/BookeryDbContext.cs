@@ -1,10 +1,11 @@
-﻿using Domain.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace EntityFramework
 {
     public class BookeryDbContext : DbContext
     {
-        public BookeryDbContext(DbContextOptions options) : base(options) { }
+        public BookeryDbContext(DbContextOptions options) : base(options)
+        {
+        }
     }
 }

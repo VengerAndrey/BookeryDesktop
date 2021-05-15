@@ -3,11 +3,11 @@
 namespace WPF.Views
 {
     /// <summary>
-    ///     Interaction logic for MockView.xaml
+    ///     Interaction logic for SharesView.xaml
     /// </summary>
-    public partial class MockView : UserControl
+    public partial class SharesView : UserControl
     {
-        public MockView()
+        public SharesView()
         {
             InitializeComponent();
         }

@@ -14,28 +14,48 @@
     <Image x:Key="ImageFolder" Source="../Resources/folder.png" Stretch="UniformToFill" />
     <Image x:Key="ImageUser" Source="../Resources/user.png" Stretch="UniformToFill" />
 
-    <!-- Buttons -->
-    <Style x:Key="StyleNavigationButton" TargetType="Button">
+    <!-- Navigation Buttons -->
+    <Style x:Key="StyleNavigationButton" TargetType="RadioButton">
         <Setter Property="Width" Value="40" />
         <Setter Property="Height" Value="40" />
-        <Setter Property="Padding" Value="4"/>
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Background" Value="{StaticResource BrushPrimary2}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Name="BorderInner"  Background="{StaticResource BrushPrimary2}"
+                <ControlTemplate TargetType="RadioButton">
+                    <Border Name="BorderInner" Background="{TemplateBinding Background}"
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
+                        <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Padding" Value="2" />
-                            <Setter Property="Background" Value="{StaticResource BrushPrimary1}" TargetName="BorderInner" />
+                            <Setter Property="Background" Value="{StaticResource BrushPrimary1}"
+                                    TargetName="BorderInner" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation To="{StaticResource ColorPrimary1}" Duration="0:0:0.1"
+                                        Storyboard.TargetProperty="Background.Color" />
+                        <ThicknessAnimation To="2" Duration="0:0:0.1" Storyboard.TargetProperty="Padding" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation To="{StaticResource ColorPrimary2}" Duration="0:0:0.1"
+                                        Storyboard.TargetProperty="Background.Color" />
+                        <ThicknessAnimation To="4" Duration="0:0:0.1" Storyboard.TargetProperty="Padding" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>

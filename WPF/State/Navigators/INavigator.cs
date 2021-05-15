@@ -11,7 +11,7 @@ namespace WPF.State.Navigators
 
     public enum ViewType
     {
-        Containers,
+        Files,
         Mock
     }
 }

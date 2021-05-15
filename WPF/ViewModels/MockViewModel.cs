@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WPF.ViewModels
+﻿namespace WPF.ViewModels
 {
-    class MockViewModel : BaseViewModel
+    internal class MockViewModel : BaseViewModel
     {
     }
 }

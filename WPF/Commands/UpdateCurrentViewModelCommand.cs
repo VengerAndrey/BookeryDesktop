@@ -1,24 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using BookeryApi.Services;
 using WPF.State.Navigators;
 using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    class UpdateCurrentViewModelCommand : ICommand
+    internal class UpdateCurrentViewModelCommand : ICommand
     {
         private readonly INavigator _navigator;
+        private readonly IStorageService _storageService;
 
-        public event EventHandler? CanExecuteChanged;
-
-        public UpdateCurrentViewModelCommand(INavigator navigator)
+        public UpdateCurrentViewModelCommand(INavigator navigator, IStorageService storageService)
         {
             _navigator = navigator;
+            _storageService = storageService;
         }
+
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
@@ -28,11 +27,10 @@ namespace WPF.Commands
         public void Execute(object parameter)
         {
             if (parameter is ViewType viewType)
-            {
                 switch (viewType)
                 {
-                    case ViewType.Containers:
-                        _navigator.CurrentViewModel = new ContainersViewModel();
+                    case ViewType.Files:
+                        _navigator.CurrentViewModel = new ItemsViewModel(_storageService);
                         break;
                     case ViewType.Mock:
                         _navigator.CurrentViewModel = new MockViewModel();
@@ -40,8 +38,6 @@ namespace WPF.Commands
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-            }
         }
-
     }
 }
