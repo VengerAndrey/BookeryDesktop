@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Windows.Input;
+using System.Windows.Media;
 using BookeryApi.Services;
 using WPF.State.Navigators;
 using WPF.ViewModels;
+using WPF.ViewModels.Factories;
 
 namespace WPF.Commands
 {
     internal class UpdateCurrentViewModelCommand : ICommand
     {
         private readonly INavigator _navigator;
-        private readonly IStorageService _storageService;
+        private readonly IViewModelFactory _viewModelFactory;
 
-        public UpdateCurrentViewModelCommand(INavigator navigator, IStorageService storageService)
+        public UpdateCurrentViewModelCommand(INavigator navigator, IViewModelFactory viewModelFactory)
         {
             _navigator = navigator;
-            _storageService = storageService;
+            _viewModelFactory = viewModelFactory;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -27,17 +29,7 @@ namespace WPF.Commands
         public void Execute(object parameter)
         {
             if (parameter is ViewType viewType)
-                switch (viewType)
-                {
-                    case ViewType.Files:
-                        _navigator.CurrentViewModel = new ItemsViewModel(_storageService);
-                        break;
-                    case ViewType.Mock:
-                        _navigator.CurrentViewModel = new MockViewModel();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel(viewType);
         }
     }
 }

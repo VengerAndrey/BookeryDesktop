@@ -2,7 +2,7 @@
 
 namespace WPF.ViewModels.Factories
 {
-    internal interface IViewModelFactory
+    public interface IViewModelFactory
     {
         BaseViewModel CreateViewModel(ViewType viewType);
     }

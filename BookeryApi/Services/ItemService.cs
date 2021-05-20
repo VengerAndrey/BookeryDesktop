@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+using Domain.Models;
+
+namespace BookeryApi.Services
+{
+    public class ItemService : IItemService
+    {
+        private readonly HttpClient _httpClient;
+
+        public ItemService()
+        {
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri("http://localhost:42396/api/Item/");
+        }
+
+        public async Task<List<Item>> GetSubItems(string path)
+        {
+            var response = await _httpClient.GetAsync($"sub-items/{path}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var items = await response.Content.ReadAsAsync<List<Item>>();
+
+                return items;
+            }
+
+            return null;
+        }
+
+        public async Task<Item> CreateDirectory(string path)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"create-directory/{path}", "");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var createdDirectory = await response.Content.ReadAsAsync<Item>();
+
+                return createdDirectory;
+            }
+
+            return null;
+        }
+
+        public async Task<Item> UploadFile(string path, MultipartFormDataContent content)
+        {
+            var response = await _httpClient.PostAsync($"upload-file/{path}", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var item = await response.Content.ReadAsAsync<Item>();
+
+                return item;
+            }
+
+            return null;
+        }
+
+        public async Task<Stream> DownloadFile(string path)
+        {
+            var response = await _httpClient.GetAsync($"download-file/{path}");
+
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsStreamAsync();
+
+            return null;
+        }
+
+        public void SetBearerToken(string accessToken)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        }
+    }
+}

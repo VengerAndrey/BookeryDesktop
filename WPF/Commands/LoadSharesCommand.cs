@@ -6,20 +6,20 @@ namespace WPF.Commands
 {
     internal class LoadSharesCommand : AsyncCommand
     {
-        private readonly ItemsViewModel _itemsViewModel;
-        private readonly IStorageService _storageService;
+        private readonly HomeViewModel _homeViewModel;
+        private readonly IShareService _shareService;
 
-        public LoadSharesCommand(ItemsViewModel itemsViewModel, IStorageService storageService)
+        public LoadSharesCommand(HomeViewModel homeViewModel, IShareService shareService)
         {
-            _itemsViewModel = itemsViewModel;
-            _storageService = storageService;
+            _homeViewModel = homeViewModel;
+            _shareService = shareService;
         }
 
         public override async Task ExecuteAsync(object parameter)
         {
-            var shares = await _storageService.GetAllShares();
+            var shares = await _shareService.GetAll();
 
-            _itemsViewModel.Shares = shares;
+            _homeViewModel.Shares = shares;
         }
     }
 }

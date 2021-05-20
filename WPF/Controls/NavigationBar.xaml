@@ -8,7 +8,7 @@
              d:DesignHeight="200" d:DesignWidth="40">
     <StackPanel Orientation="Vertical" Background="{StaticResource BrushPrimary2}">
         <RadioButton Content="{StaticResource ImageFolder}" Style="{StaticResource StyleNavigationButton}"
-                     Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Files}" />
+                     Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Home}" />
         <RadioButton Content="{StaticResource ImageUser}" Style="{StaticResource StyleNavigationButton}"
                      Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Mock}" />
     </StackPanel>

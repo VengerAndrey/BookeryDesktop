@@ -5,22 +5,22 @@ namespace WPF.ViewModels.Factories
 {
     internal class ViewModelFactory : IViewModelFactory
     {
-        private readonly CreateViewModel<ItemsViewModel> _createItemsViewModel;
         private readonly CreateViewModel<MockViewModel> _createMockViewModel;
+        private readonly CreateViewModel<HomeViewModel> _createHomeViewModel;
 
-        public ViewModelFactory(CreateViewModel<ItemsViewModel> createItemsViewModel,
-            CreateViewModel<MockViewModel> createMockViewModel)
+        public ViewModelFactory(CreateViewModel<MockViewModel> createMockViewModel, 
+            CreateViewModel<HomeViewModel> createHomeViewModel)
         {
-            _createItemsViewModel = createItemsViewModel;
             _createMockViewModel = createMockViewModel;
+            _createHomeViewModel = createHomeViewModel;
         }
 
         public BaseViewModel CreateViewModel(ViewType viewType)
         {
             switch (viewType)
             {
-                case ViewType.Files:
-                    return _createItemsViewModel();
+                case ViewType.Home:
+                    return _createHomeViewModel();
                 case ViewType.Mock:
                     return _createMockViewModel();
                 default:

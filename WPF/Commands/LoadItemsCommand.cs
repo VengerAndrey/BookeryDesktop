@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 using BookeryApi.Services;
 using Domain.Models;
+using WPF.Common;
 using WPF.Controls;
 using WPF.ViewModels;
 
@@ -9,49 +12,86 @@ namespace WPF.Commands
 {
     internal class LoadItemsCommand : AsyncCommand
     {
-        private readonly ItemsViewModel _itemsViewModel;
-        private readonly IStorageService _storageService;
-        private string _path = "d4e21b92-8d47-4efd-8867-fe45fa18cac2/root";
+        private readonly HomeViewModel _homeViewModel;
+        private readonly IItemService _itemService;
+        private readonly PathBuilder _pathBuilder;
 
-        public LoadItemsCommand(ItemsViewModel itemsViewModel, IStorageService storageService)
+        public LoadItemsCommand(HomeViewModel homeViewModel, IItemService itemService)
         {
-            _itemsViewModel = itemsViewModel;
-            _storageService = storageService;
+            _homeViewModel = homeViewModel;
+            _itemService = itemService;
+            _pathBuilder = new PathBuilder();
         }
 
         public override async Task ExecuteAsync(object parameter)
         {
             var itemControls = new List<ItemControl>();
 
-            if (parameter is string path) _path = path + "/root";
+            if (parameter is string path) _pathBuilder.ParsePath(path);
 
-            if (parameter is null || parameter is string)
+            if (parameter is ItemControl itemControl)
             {
-                var allItems = await _storageService.GetSubItems(_path);
+                if (itemControl.Item.Name == "[..]")
+                {
+                    _pathBuilder.GetLastNode();
+                }
+                else
+                {
+                    _pathBuilder.AddNode(itemControl.Item.Name);
+                }
 
-                foreach (var item in allItems) itemControls.Add(new ItemControl(item, this));
+                if (_pathBuilder.IsFile())
+                {
+                    MessageBox.Show("This is a file.");
+                    _pathBuilder.GetLastNode();
+                    return;
+                }
 
-                _itemsViewModel.ItemControls = itemControls;
-
-                return;
+                if (_pathBuilder.GetDepth(_pathBuilder.GetPath()) > 2)
+                    itemControls.Add(new ItemControl(new Item { Name = "[..]", IsDirectory = true }, this));
             }
 
-            var itemControl = parameter as ItemControl;
-
-            if (itemControl is null) return;
-
-            itemControls.Add(new ItemControl(new Item {Name = "[..]"}, this));
-
-            if (itemControl.Item.Name == "[..]")
-                _path = _path.Substring(0, _path.LastIndexOf("/"));
-            else
-                _path = _path + "/" + itemControl.Item.Name;
-
-            var items = await _storageService.GetSubItems(_path);
+            var items = await _itemService.GetSubItems(_pathBuilder.GetPath());
 
             foreach (var item in items) itemControls.Add(new ItemControl(item, this));
 
-            _itemsViewModel.ItemControls = itemControls;
+            _homeViewModel.ItemControls = itemControls;
         }
+
+
+        /*public override async Task ExecuteAsync(object parameter)
+        {
+            var items = new List<Item>();
+
+            if (parameter is string path) _pathBuilder.ParsePath(path);
+
+            if (parameter is Item item)
+            {
+                if (item.Name == "[..]")
+                {
+                    _pathBuilder.GetLastNode();
+                }
+                else
+                {
+                    _pathBuilder.AddNode(item.Name);
+                }
+
+                if (_pathBuilder.IsFile())
+                {
+                    MessageBox.Show("This is a file.");
+                    _pathBuilder.GetLastNode();
+                    return;
+                }
+
+                if (_pathBuilder.GetDepth(_pathBuilder.GetPath()) > 2)
+                    items.Add(new Item { Name = "[..]" });
+            }
+
+            var subItems = await _itemService.GetSubItems(_pathBuilder.GetPath());
+
+            foreach (var subItem in subItems) items.Add(subItem);
+
+            _homeViewModel.Items = items;
+        }*/
     }
 }

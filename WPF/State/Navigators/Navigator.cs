@@ -3,17 +3,18 @@ using BookeryApi.Services;
 using WPF.Commands;
 using WPF.Models;
 using WPF.ViewModels;
+using WPF.ViewModels.Factories;
 
 namespace WPF.State.Navigators
 {
     public class Navigator : ObservableObject, INavigator
     {
-        private readonly IStorageService _storageService;
+        private readonly IViewModelFactory _viewModelFactory;
         private BaseViewModel _currentViewModel;
 
-        public Navigator(IStorageService storageService)
+        public Navigator(IViewModelFactory viewModelFactory)
         {
-            _storageService = storageService;
+            _viewModelFactory = viewModelFactory;
         }
 
         public BaseViewModel CurrentViewModel
@@ -26,6 +27,6 @@ namespace WPF.State.Navigators
             }
         }
 
-        public ICommand UpdateCurrentViewModelCommand => new UpdateCurrentViewModelCommand(this, _storageService);
+        public ICommand UpdateCurrentViewModelCommand => new UpdateCurrentViewModelCommand(this, _viewModelFactory);
     }
 }

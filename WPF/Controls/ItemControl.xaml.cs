@@ -1,6 +1,8 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using Domain.Models;
+using WPF.Common;
 
 namespace WPF.Controls
 {
@@ -14,13 +16,15 @@ namespace WPF.Controls
         public ItemControl(Item item, ICommand loadItemsCommand)
         {
             Item = item;
+            Image = ItemImageHelper.GetImage(item);
             _loadItemsCommand = loadItemsCommand;
             InitializeComponent();
         }
 
         public Item Item { get; set; }
+        public BitmapImage Image { get; set; }
 
-        private void Grid_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void ItemControl_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             _loadItemsCommand.Execute(this);
         }

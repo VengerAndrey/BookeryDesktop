@@ -11,12 +11,13 @@ namespace WPF.HostBuilders
         {
             hostBuilder.ConfigureServices(services =>
             {
-                services.AddTransient<ItemsViewModel>();
+                services.AddTransient<HomeViewModel>();
                 services.AddTransient<MockViewModel>();
+
                 services.AddTransient<MainViewModel>();
 
-                services.AddSingleton<CreateViewModel<ItemsViewModel>>(serviceProvider =>
-                    serviceProvider.GetRequiredService<ItemsViewModel>);
+                services.AddSingleton<CreateViewModel<HomeViewModel>>(serviceProvider =>
+                    serviceProvider.GetRequiredService<HomeViewModel>);
                 services.AddSingleton<CreateViewModel<MockViewModel>>(serviceProvider =>
                     serviceProvider.GetRequiredService<MockViewModel>);
 

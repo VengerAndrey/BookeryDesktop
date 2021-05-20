@@ -9,8 +9,6 @@
   <ItemGroup>
     <None Remove="HostBuilders\AddStoresHostBuilderExtensions.cs~RF97c4c8.TMP" />
     <None Remove="Resources\folder.png" />
-    <None Remove="Resources\ItemImages\pdf.png" />
-    <None Remove="Resources\ItemImages\txt.png" />
     <None Remove="Resources\user.png" />
   </ItemGroup>
 
@@ -30,8 +28,6 @@
     <Resource Include="Resources\folder.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\ItemImages\pdf.png" />
-    <Resource Include="Resources\ItemImages\txt.png" />
     <Resource Include="Resources\user.png" />
   </ItemGroup>
 

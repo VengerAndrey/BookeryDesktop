@@ -9,11 +9,8 @@
                 <ResourceDictionary Source="Styles/Common.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate DataType="{x:Type viewModels:SharesViewModel}">
-                <views:SharesView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:ItemsViewModel}">
-                <views:ItemsView />
+            <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+                <views:HomeView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:MockViewModel}">
                 <views:MockView />
