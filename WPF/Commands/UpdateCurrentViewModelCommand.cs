@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-using System.Windows.Media;
-using BookeryApi.Services;
-using WPF.State.Navigators;
-using WPF.ViewModels;
+using WPF.State.Navigation;
 using WPF.ViewModels.Factories;
 
 namespace WPF.Commands

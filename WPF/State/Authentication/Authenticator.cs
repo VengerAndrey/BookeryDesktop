@@ -1,0 +1,63 @@
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using BookeryApi.Services;
+using Domain.Models.DTOs.Requests;
+using Domain.Models.DTOs.Responses;
+
+namespace WPF.State.Authentication
+{
+    internal class Authenticator : IAuthenticator
+    {
+        private readonly IItemService _itemService;
+        private readonly IShareService _shareService;
+        private readonly ITokenService _tokenService;
+
+        private AuthenticationResponse _currentAuthenticationResponse;
+
+        private Timer _timer;
+
+        public Authenticator(ITokenService tokenService, IShareService shareService, IItemService itemService)
+        {
+            _tokenService = tokenService;
+            _shareService = shareService;
+            _itemService = itemService;
+        }
+
+        public bool IsLoggedIn => _currentAuthenticationResponse != null;
+        public event Action StateChanged;
+
+        public async Task Login(string email, string password)
+        {
+            await Authenticate(new AuthenticationRequest {Email = email, Password = password});
+            _timer = new Timer(async o => { await RefreshToken(); }, null, TimeSpan.Zero,
+                _currentAuthenticationResponse.ExpireAt - DateTime.UtcNow);
+            StateChanged?.Invoke();
+        }
+
+        public void Logout()
+        {
+            _timer?.Change(Timeout.Infinite, 0);
+            _currentAuthenticationResponse = null;
+        }
+
+        private async Task Authenticate(AuthenticationRequest authenticationRequest)
+        {
+            _currentAuthenticationResponse = await _tokenService.GetToken(authenticationRequest);
+            SetBearerTokenToServices();
+        }
+
+        private async Task RefreshToken()
+        {
+            _currentAuthenticationResponse = await _tokenService
+                .RefreshToken(_currentAuthenticationResponse.AccessToken, _currentAuthenticationResponse.RefreshToken);
+            SetBearerTokenToServices();
+        }
+
+        private void SetBearerTokenToServices()
+        {
+            _shareService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
+            _itemService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
+        }
+    }
+}

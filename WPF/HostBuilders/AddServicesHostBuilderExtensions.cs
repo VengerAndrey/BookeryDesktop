@@ -1,10 +1,6 @@
-﻿using System.Linq;
-using System.Reflection;
-using BookeryApi.Services;
+﻿using BookeryApi.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using WPF.Services;
 
 namespace WPF.HostBuilders
 {
@@ -18,7 +14,6 @@ namespace WPF.HostBuilders
                 services.AddSingleton<IItemService, ItemService>();
 
                 services.AddSingleton<ITokenService, TokenService>();
-                services.AddHostedService<HostedTokenService>();
             });
 
             return hostBuilder;

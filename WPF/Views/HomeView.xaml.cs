@@ -1,7 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 using Domain.Models;
-using WPF.Controls;
 using WPF.ViewModels;
 
 namespace WPF.Views

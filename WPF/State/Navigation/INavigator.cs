@@ -1,19 +1,18 @@
-﻿using System.Windows.Input;
+﻿using System;
 using WPF.ViewModels;
 
-namespace WPF.State.Navigators
+namespace WPF.State.Navigation
 {
     public interface INavigator
     {
         BaseViewModel CurrentViewModel { get; set; }
-        ICommand UpdateCurrentViewModelCommand { get; }
+        event Action StateChanged;
     }
 
     public enum ViewType
     {
         Home,
-        Shares,
-        Files,
+        Login,
         Mock
     }
 }

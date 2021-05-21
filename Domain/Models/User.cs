@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
-
-namespace Domain.Models
+﻿namespace Domain.Models
 {
     public class User
     {

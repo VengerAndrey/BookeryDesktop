@@ -1,13 +1,12 @@
-﻿using System.Windows.Input;
-using BookeryApi.Services;
+﻿using System;
+using System.Windows.Input;
 using WPF.Commands;
-using WPF.Models;
 using WPF.ViewModels;
 using WPF.ViewModels.Factories;
 
-namespace WPF.State.Navigators
+namespace WPF.State.Navigation
 {
-    public class Navigator : ObservableObject, INavigator
+    public class Navigator : INavigator
     {
         private readonly IViewModelFactory _viewModelFactory;
         private BaseViewModel _currentViewModel;
@@ -17,16 +16,18 @@ namespace WPF.State.Navigators
             _viewModelFactory = viewModelFactory;
         }
 
+        public ICommand UpdateCurrentViewModelCommand => new UpdateCurrentViewModelCommand(this, _viewModelFactory);
+
         public BaseViewModel CurrentViewModel
         {
             get => _currentViewModel;
             set
             {
                 _currentViewModel = value;
-                OnPropertyChanged(nameof(CurrentViewModel));
+                StateChanged?.Invoke();
             }
         }
 
-        public ICommand UpdateCurrentViewModelCommand => new UpdateCurrentViewModelCommand(this, _viewModelFactory);
+        public event Action StateChanged;
     }
 }

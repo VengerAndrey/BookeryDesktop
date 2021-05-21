@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using BookeryApi.Services;
 using Domain.Models;
 using WPF.Common;
@@ -32,13 +31,9 @@ namespace WPF.Commands
             if (parameter is ItemControl itemControl)
             {
                 if (itemControl.Item.Name == "[..]")
-                {
                     _pathBuilder.GetLastNode();
-                }
                 else
-                {
                     _pathBuilder.AddNode(itemControl.Item.Name);
-                }
 
                 if (_pathBuilder.IsFile())
                 {
@@ -48,7 +43,7 @@ namespace WPF.Commands
                 }
 
                 if (_pathBuilder.GetDepth(_pathBuilder.GetPath()) > 2)
-                    itemControls.Add(new ItemControl(new Item { Name = "[..]", IsDirectory = true }, this));
+                    itemControls.Add(new ItemControl(new Item {Name = "[..]", IsDirectory = true}, this));
             }
 
             var items = await _itemService.GetSubItems(_pathBuilder.GetPath());

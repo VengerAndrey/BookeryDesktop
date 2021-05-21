@@ -1,24 +1,29 @@
 ﻿using System;
-using WPF.State.Navigators;
+using WPF.State.Navigation;
 
 namespace WPF.ViewModels.Factories
 {
     internal class ViewModelFactory : IViewModelFactory
     {
-        private readonly CreateViewModel<MockViewModel> _createMockViewModel;
         private readonly CreateViewModel<HomeViewModel> _createHomeViewModel;
+        private readonly CreateViewModel<LoginViewModel> _createLoginViewModel;
+        private readonly CreateViewModel<MockViewModel> _createMockViewModel;
 
-        public ViewModelFactory(CreateViewModel<MockViewModel> createMockViewModel, 
-            CreateViewModel<HomeViewModel> createHomeViewModel)
+        public ViewModelFactory(CreateViewModel<LoginViewModel> createLoginViewModel,
+            CreateViewModel<HomeViewModel> createHomeViewModel,
+            CreateViewModel<MockViewModel> createMockViewModel)
         {
-            _createMockViewModel = createMockViewModel;
+            _createLoginViewModel = createLoginViewModel;
             _createHomeViewModel = createHomeViewModel;
+            _createMockViewModel = createMockViewModel;
         }
 
         public BaseViewModel CreateViewModel(ViewType viewType)
         {
             switch (viewType)
             {
+                case ViewType.Login:
+                    return _createLoginViewModel();
                 case ViewType.Home:
                     return _createHomeViewModel();
                 case ViewType.Mock:

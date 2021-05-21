@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 using BookeryApi.Services;
 using Domain.Models;
@@ -11,9 +7,20 @@ using WPF.Controls;
 
 namespace WPF.ViewModels
 {
-    class HomeViewModel : BaseViewModel
+    internal class HomeViewModel : BaseViewModel
     {
+        private List<ItemControl> _itemControls;
+
+        private IEnumerable<Item> _items;
         private IEnumerable<Share> _shares;
+
+        public HomeViewModel(IShareService shareService, IItemService itemService)
+        {
+            LoadSharesCommand = new LoadSharesCommand(this, shareService);
+            LoadSharesCommand.Execute(null);
+
+            LoadItemsCommand = new LoadItemsCommand(this, itemService);
+        }
 
         public IEnumerable<Share> Shares
         {
@@ -27,8 +34,6 @@ namespace WPF.ViewModels
 
         public ICommand LoadSharesCommand { get; }
 
-        private IEnumerable<Item> _items;
-
         public IEnumerable<Item> Items
         {
             get => _items;
@@ -38,8 +43,6 @@ namespace WPF.ViewModels
                 OnPropertyChanged(nameof(Items));
             }
         }
-
-        private List<ItemControl> _itemControls;
 
         public List<ItemControl> ItemControls
         {
@@ -52,13 +55,5 @@ namespace WPF.ViewModels
         }
 
         public ICommand LoadItemsCommand { get; }
-
-        public HomeViewModel(IShareService shareService, IItemService itemService)
-        {
-            LoadSharesCommand = new LoadSharesCommand(this, shareService);
-            LoadSharesCommand.Execute(null);
-
-            LoadItemsCommand = new LoadItemsCommand(this, itemService);
-        }
     }
 }

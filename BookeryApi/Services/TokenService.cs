@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Domain.Models.DTOs.Requests;
 using Domain.Models.DTOs.Responses;
@@ -25,10 +22,7 @@ namespace BookeryApi.Services
             var response = await _httpClient.PostAsJsonAsync("token", authenticationRequest)
                 .ConfigureAwait(false);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<AuthenticationResponse>();
-            }
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<AuthenticationResponse>();
 
             return null;
         }
@@ -45,10 +39,7 @@ namespace BookeryApi.Services
 
             var response = await _httpClient.PostAsJsonAsync("refresh-token", refreshTokenRequest);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsAsync<AuthenticationResponse>();
-            }
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<AuthenticationResponse>();
 
             return null;
         }

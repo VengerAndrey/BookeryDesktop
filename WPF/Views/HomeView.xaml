@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:WPF.Controls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -22,12 +21,13 @@
                     <Border Name="ShareBorder" Padding="5" SnapsToDevicePixels="true"
                             Background="{StaticResource BrushPrimary2}" CornerRadius="5"
                             Margin="5" MouseLeftButtonDown="ShareBorder_OnMouseLeftButtonDown">
-                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <ListBox Grid.Column="1" ItemsSource="{Binding ItemControls}" HorizontalContentAlignment="Stretch" />
+        <ListBox Grid.Column="1" ItemsSource="{Binding ItemControls}" HorizontalContentAlignment="Stretch"
+                 BorderThickness="0" />
 
         <!--
         <ListBox Grid.Column="1" ItemsSource="{Binding Items}" HorizontalContentAlignment="Stretch">

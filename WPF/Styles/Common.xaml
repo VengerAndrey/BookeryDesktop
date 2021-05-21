@@ -3,7 +3,7 @@
     <!-- Colors -->
     <Color x:Key="ColorPrimary1">White</Color>
     <Color x:Key="ColorPrimary2">LightGray</Color>
-    <Color x:Key="ColorPrimary3">LightYellow</Color>
+    <Color x:Key="ColorPrimary3">Gray</Color>
 
     <!-- Brushes -->
     <SolidColorBrush x:Key="BrushPrimary1" Color="{StaticResource ColorPrimary1}" />
@@ -13,6 +13,33 @@
     <!-- Images -->
     <Image x:Key="ImageFolder" Source="../Resources/folder.png" Stretch="UniformToFill" />
     <Image x:Key="ImageUser" Source="../Resources/user.png" Stretch="UniformToFill" />
+
+    <!-- Buttons -->
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource BrushPrimary2}" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="10 5" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="3" Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}" Margin="{TemplateBinding Margin}">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BrushPrimary3}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.5" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <!-- Navigation Buttons -->
     <Style x:Key="StyleNavigationButton" TargetType="RadioButton">
@@ -57,5 +84,20 @@
                 </BeginStoryboard>
             </EventTrigger>
         </Style.Triggers>
+    </Style>
+
+    <!-- Text Boxes -->
+    <Style TargetType="TextBox">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Control">
+                    <Border BorderThickness="1" BorderBrush="{StaticResource BrushPrimary3}" CornerRadius="3">
+                        <ScrollViewer x:Name="PART_ContentHost" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

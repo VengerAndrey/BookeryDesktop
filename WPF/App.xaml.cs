@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WPF.HostBuilders;
+using WPF.State.Authentication;
 
 namespace WPF
 {
@@ -35,6 +36,9 @@ namespace WPF
 
         protected override async void OnExit(ExitEventArgs e)
         {
+            var authenticator = _host.Services.GetRequiredService<IAuthenticator>();
+            authenticator.Logout();
+
             await _host.StopAsync();
             _host.Dispose();
 
