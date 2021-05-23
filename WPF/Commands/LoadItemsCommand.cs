@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
-using BookeryApi.Services;
+using BookeryApi.Services.Storage;
 using Domain.Models;
 using WPF.Common;
 using WPF.Controls;
@@ -46,13 +47,19 @@ namespace WPF.Commands
                     itemControls.Add(new ItemControl(new Item {Name = "[..]", IsDirectory = true}, this));
             }
 
-            var items = await _itemService.GetSubItems(_pathBuilder.GetPath());
+            try
+            {
+                var items = await _itemService.GetSubItems(_pathBuilder.GetPath());
 
-            foreach (var item in items) itemControls.Add(new ItemControl(item, this));
+                foreach (var item in items) itemControls.Add(new ItemControl(item, this));
 
-            _homeViewModel.ItemControls = itemControls;
+                _homeViewModel.ItemControls = itemControls;
+            }
+            catch (Exception)
+            {
+                _homeViewModel.MessageViewModel.Message = "Remote service is not available.";
+            }
         }
-
 
         /*public override async Task ExecuteAsync(object parameter)
         {

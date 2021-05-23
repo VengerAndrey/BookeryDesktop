@@ -6,11 +6,78 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ItemsControl Grid.Column="0" ItemsSource="{Binding Shares}">
+        <Grid Grid.Row="0" Grid.Column="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Your courses" />
+            <ListBox Grid.Row="1" BorderThickness="0" ItemsSource="{Binding Shares}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" 
+                                   FontSize="14" Text="{Binding Name}"/>
+                        <!--
+                        <Border x:Name="ShareBorder" Margin="5" Padding="5" Background="{StaticResource BrushPrimary1}" 
+                                CornerRadius="5" SnapsToDevicePixels="True"
+                                MouseLeftButtonDown="ShareBorder_OnMouseLeftButtonDown">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" 
+                                       FontSize="14" Text="{Binding Name}"/>
+                        </Border>
+                        -->
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Name="ShareBorder" Margin="2" Padding="5" CornerRadius="5" SnapsToDevicePixels="True"
+                                            MouseLeftButtonDown="ShareBorder_OnMouseLeftButtonDown"
+                                            Background="Transparent">
+                                        <ContentPresenter/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="ShareBorder" Property="Background" Value="{StaticResource BrushPrimary2}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.Style>
+                    <Style TargetType="{x:Type ListBox}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}" Value="0">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Border Name="ShareBorder" Margin="2" Padding="5" CornerRadius="5" SnapsToDevicePixels="True"
+                                                    Background="Transparent">
+                                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" 
+                                                           FontSize="14" Text="No courses yet." />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Style>
+            </ListBox>
+        </Grid>
+        <!-- 
+        <ItemsControl Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Shares}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel />
@@ -18,7 +85,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Name="ShareBorder" Padding="5" SnapsToDevicePixels="true"
+                    <Border x:Name="ShareBorder" Padding="5" SnapsToDevicePixels="true"
                             Background="{StaticResource BrushPrimary2}" CornerRadius="5"
                             Margin="5" MouseLeftButtonDown="ShareBorder_OnMouseLeftButtonDown">
                         <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -26,9 +93,41 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <ListBox Grid.Column="1" ItemsSource="{Binding ItemControls}" HorizontalContentAlignment="Stretch"
-                 BorderThickness="0" />
-
+        -->
+        <Grid Grid.Row="0" Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Course files" />
+            <ListBox Grid.Row="1" HorizontalContentAlignment="Stretch" BorderThickness="0"
+                     ItemsSource="{Binding ItemControls}">
+                <ListBox.Style>
+                    <Style TargetType="{x:Type ListBox}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}" Value="0">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Border Name="ShareBorder" Margin="2" Padding="5" CornerRadius="5" SnapsToDevicePixels="True"
+                                                    Background="Transparent">
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Center" 
+                                                           FontSize="14" Text="Select a course to view files." />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Style>
+            </ListBox>
+        </Grid>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" 
+                   Foreground="{StaticResource BrushError}" FontSize="16"
+                   HorizontalAlignment="Center" DataContext="{Binding MessageViewModel}"
+                   Text="{Binding Message}"
+                   Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <!--
         <ListBox Grid.Column="1" ItemsSource="{Binding Items}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>

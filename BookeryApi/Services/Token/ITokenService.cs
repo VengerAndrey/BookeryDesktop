@@ -2,7 +2,7 @@
 using Domain.Models.DTOs.Requests;
 using Domain.Models.DTOs.Responses;
 
-namespace BookeryApi.Services
+namespace BookeryApi.Services.Token
 {
     public interface ITokenService
     {

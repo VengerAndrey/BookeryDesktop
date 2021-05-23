@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Domain.Models;
 
-namespace BookeryApi.Services
+namespace BookeryApi.Services.Storage
 {
     public class ShareService : IShareService
     {

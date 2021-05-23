@@ -1,14 +1,21 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:WPF.Common.Converters">
     <!-- Colors -->
     <Color x:Key="ColorPrimary1">White</Color>
     <Color x:Key="ColorPrimary2">LightGray</Color>
-    <Color x:Key="ColorPrimary3">Gray</Color>
+    <Color x:Key="ColorPrimary3">DarkGray</Color>
+    <Color x:Key="ColorError">Red</Color>
 
     <!-- Brushes -->
     <SolidColorBrush x:Key="BrushPrimary1" Color="{StaticResource ColorPrimary1}" />
     <SolidColorBrush x:Key="BrushPrimary2" Color="{StaticResource ColorPrimary2}" />
     <SolidColorBrush x:Key="BrushPrimary3" Color="{StaticResource ColorPrimary3}" />
+    <SolidColorBrush x:Key="BrushError" Color="{StaticResource ColorError}" />
+
+    <!-- Converters -->
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:ValueToParameterEqualityConverter x:Key="ValueToParameterEqualityConverter" />
 
     <!-- Images -->
     <Image x:Key="ImageFolder" Source="../Resources/folder.png" Stretch="UniformToFill" />

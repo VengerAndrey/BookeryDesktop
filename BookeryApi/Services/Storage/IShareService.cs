@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Models;
 
-namespace BookeryApi.Services
+namespace BookeryApi.Services.Storage
 {
     public interface IShareService
     {

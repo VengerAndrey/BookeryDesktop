@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using BookeryApi.Exceptions;
 using WPF.State.Authentication;
 using WPF.State.Navigation;
 using WPF.ViewModels;
@@ -16,13 +18,34 @@ namespace WPF.Commands
             _loginViewModel = loginViewModel;
             _authenticator = authenticator;
             _renavigator = renavigator;
+
+            _loginViewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(LoginViewModel.CanLogin)) OnCanExecuteChanged();
+            };
+        }
+
+        public override bool CanExecute(object parameter)
+        {
+            return _loginViewModel.CanLogin && base.CanExecute(parameter);
         }
 
         public override async Task ExecuteAsync(object parameter)
         {
-            await _authenticator.Login(_loginViewModel.Email, _loginViewModel.Password);
+            try
+            {
+                await _authenticator.Login(_loginViewModel.Email, _loginViewModel.Password);
 
-            _renavigator.Renavigate();
+                _renavigator.Renavigate();
+            }
+            catch (InvalidCredentialException e)
+            {
+                _loginViewModel.MessageViewModel.Message = e.Message;
+            }
+            catch (Exception)
+            {
+                _loginViewModel.MessageViewModel.Message = "Remote service is not available.";
+            }
         }
     }
 }

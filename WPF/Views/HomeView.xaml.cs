@@ -19,8 +19,8 @@ namespace WPF.Views
         {
             var homeViewModel = DataContext as HomeViewModel;
             var border = sender as Border;
-            var textBlock = border?.Child as TextBlock;
-            var share = textBlock?.DataContext as Share;
+            var contentPresenter = border?.Child as ContentPresenter;
+            var share = contentPresenter?.Content as Share;
             homeViewModel?.LoadItemsCommand.Execute($"{share.Id}/root");
         }
 

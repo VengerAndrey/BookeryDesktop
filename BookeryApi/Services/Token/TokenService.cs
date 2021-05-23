@@ -2,10 +2,11 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using BookeryApi.Exceptions;
 using Domain.Models.DTOs.Requests;
 using Domain.Models.DTOs.Responses;
 
-namespace BookeryApi.Services
+namespace BookeryApi.Services.Token
 {
     public class TokenService : ITokenService
     {
@@ -24,7 +25,7 @@ namespace BookeryApi.Services
 
             if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<AuthenticationResponse>();
 
-            return null;
+            throw new InvalidCredentialException();
         }
 
         public async Task<AuthenticationResponse> RefreshToken(string accessToken, string refreshToken)

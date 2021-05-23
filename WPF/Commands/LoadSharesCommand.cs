@@ -1,5 +1,6 @@
-﻿using System.Threading.Tasks;
-using BookeryApi.Services;
+﻿using System;
+using System.Threading.Tasks;
+using BookeryApi.Services.Storage;
 using WPF.ViewModels;
 
 namespace WPF.Commands
@@ -17,9 +18,14 @@ namespace WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
-            var shares = await _shareService.GetAll();
-
-            _homeViewModel.Shares = shares;
+            try
+            {
+                _homeViewModel.Shares = await _shareService.GetAll(); ;
+            }
+            catch (Exception)
+            {
+                _homeViewModel.MessageViewModel.Message = "Remote service is not available.";
+            }
         }
     }
 }

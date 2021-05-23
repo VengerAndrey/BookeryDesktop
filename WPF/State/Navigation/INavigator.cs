@@ -13,6 +13,6 @@ namespace WPF.State.Navigation
     {
         Home,
         Login,
-        Mock
+        User
     }
 }

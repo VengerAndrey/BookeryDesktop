@@ -4,12 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:nav="clr-namespace:WPF.State.Navigation"
+             xmlns:viewModels="clr-namespace:WPF.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="40">
     <StackPanel Orientation="Vertical" Background="{StaticResource BrushPrimary2}">
         <RadioButton Content="{StaticResource ImageFolder}" Style="{StaticResource StyleNavigationButton}"
-                     Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Home}" />
+                     Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Home}"
+                     IsChecked="{Binding CurrentViewModel, Mode=OneWay, 
+            Converter={StaticResource ValueToParameterEqualityConverter}, 
+            ConverterParameter={x:Type viewModels:HomeViewModel}}" />
         <RadioButton Content="{StaticResource ImageUser}" Style="{StaticResource StyleNavigationButton}"
-                     Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Mock}" />
+                     Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.User}"
+                     IsChecked="{Binding CurrentViewModel, Mode=OneWay, 
+            Converter={StaticResource ValueToParameterEqualityConverter}, 
+            ConverterParameter={x:Type viewModels:UserViewModel}}" />
     </StackPanel>
 </UserControl>

@@ -5,9 +5,9 @@ namespace WPF.Views
     /// <summary>
     ///     Interaction logic for MockView.xaml
     /// </summary>
-    public partial class MockView : UserControl
+    public partial class UserView : UserControl
     {
-        public MockView()
+        public UserView()
         {
             InitializeComponent();
         }

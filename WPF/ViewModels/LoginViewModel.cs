@@ -13,8 +13,12 @@ namespace WPF.ViewModels
 
         public LoginViewModel(IAuthenticator authenticator, IRenavigator loginRenavigator)
         {
+            MessageViewModel = new MessageViewModel();
+
             LoginCommand = new LoginCommand(this, authenticator, loginRenavigator);
         }
+
+        public MessageViewModel MessageViewModel { get; }
 
         public string Email
         {
@@ -23,6 +27,7 @@ namespace WPF.ViewModels
             {
                 _email = value;
                 OnPropertyChanged(nameof(Email));
+                OnPropertyChanged(nameof(CanLogin));
             }
         }
 
@@ -33,9 +38,12 @@ namespace WPF.ViewModels
             {
                 _password = value;
                 OnPropertyChanged(nameof(Password));
+                OnPropertyChanged(nameof(CanLogin));
             }
         }
 
         public ICommand LoginCommand { get; set; }
+
+        public bool CanLogin => !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password);
     }
 }

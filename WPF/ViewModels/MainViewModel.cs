@@ -16,7 +16,20 @@ namespace WPF.ViewModels
             _navigator = navigator;
             _authenticator = authenticator;
 
-            _authenticator.StateChanged += () => { OnPropertyChanged(nameof(IsLoggedIn)); };
+            _authenticator.StateChanged += () =>
+            {
+                OnPropertyChanged(nameof(IsLoggedIn));
+                var homeViewModel = viewModelFactory.CreateViewModel(ViewType.Home) as HomeViewModel;
+                if (!IsLoggedIn)
+                {
+                    homeViewModel?.Reset();
+                    _navigator.CurrentViewModel = null;
+                }
+                else
+                {
+                    homeViewModel?.LoadSharesCommand.Execute(null);
+                }
+            };
 
             _navigator.StateChanged += () => { OnPropertyChanged(nameof(CurrentViewModel)); };
 

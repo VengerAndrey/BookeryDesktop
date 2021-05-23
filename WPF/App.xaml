@@ -15,8 +15,8 @@
             <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
                 <views:HomeView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:MockViewModel}">
-                <views:MockView />
+            <DataTemplate DataType="{x:Type viewModels:UserViewModel}">
+                <views:UserView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

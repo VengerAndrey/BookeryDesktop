@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using BookeryApi.Services;
+using BookeryApi.Services.Storage;
+using BookeryApi.Services.Token;
+using BookeryApi.Services.User;
 using Domain.Models.DTOs.Requests;
 using Domain.Models.DTOs.Responses;
 
@@ -12,16 +14,19 @@ namespace WPF.State.Authentication
         private readonly IItemService _itemService;
         private readonly IShareService _shareService;
         private readonly ITokenService _tokenService;
+        private readonly IUserService _userService;
 
         private AuthenticationResponse _currentAuthenticationResponse;
 
         private Timer _timer;
 
-        public Authenticator(ITokenService tokenService, IShareService shareService, IItemService itemService)
+        public Authenticator(ITokenService tokenService, IShareService shareService, IItemService itemService,
+            IUserService userService)
         {
             _tokenService = tokenService;
             _shareService = shareService;
             _itemService = itemService;
+            _userService = userService;
         }
 
         public bool IsLoggedIn => _currentAuthenticationResponse != null;
@@ -39,6 +44,7 @@ namespace WPF.State.Authentication
         {
             _timer?.Change(Timeout.Infinite, 0);
             _currentAuthenticationResponse = null;
+            StateChanged?.Invoke();
         }
 
         private async Task Authenticate(AuthenticationRequest authenticationRequest)
@@ -58,6 +64,8 @@ namespace WPF.State.Authentication
         {
             _shareService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
             _itemService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
+            _shareService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
+            _userService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
         }
     }
 }

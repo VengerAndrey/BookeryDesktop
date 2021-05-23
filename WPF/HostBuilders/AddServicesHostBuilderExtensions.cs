@@ -1,4 +1,6 @@
-﻿using BookeryApi.Services;
+﻿using BookeryApi.Services.Storage;
+using BookeryApi.Services.Token;
+using BookeryApi.Services.User;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -12,6 +14,7 @@ namespace WPF.HostBuilders
             {
                 services.AddSingleton<IShareService, ShareService>();
                 services.AddSingleton<IItemService, ItemService>();
+                services.AddSingleton<IUserService, UserService>();
 
                 services.AddSingleton<ITokenService, TokenService>();
             });
