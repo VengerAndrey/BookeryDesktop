@@ -5,7 +5,6 @@ using System.Windows.Input;
 using BookeryApi.Services.Storage;
 using Domain.Models;
 using WPF.Commands;
-using WPF.Common;
 using WPF.Common.ContextMenus;
 using WPF.Controls;
 
@@ -13,8 +12,8 @@ namespace WPF.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        private List<ItemControl> _itemControls;
         private Item _currentItem;
+        private List<ItemControl> _itemControls;
 
         private IEnumerable<Share> _shares;
 
@@ -23,29 +22,31 @@ namespace WPF.ViewModels
             MessageViewModel = new MessageViewModel();
 
             LoadSharesCommand = new LoadSharesCommand(this, shareService);
-            //LoadSharesCommand.Execute(null);
 
             LoadItemsCommand = new LoadItemsCommand(this, itemService);
+            RefreshItemsCommand = new RefreshItemsCommand(this, itemService);
             DownloadFileCommand = new DownloadFileCommand(itemService);
-            UploadFileCommand = new UploadCommand(itemService);
-            CreateDirectoryCommand = new CreateDirectoryCommand(itemService);
-            DeleteItemCommand = new DeleteItemCommand(itemService);
+            UploadFileCommand = new UploadCommand(itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
+            CreateDirectoryCommand =
+                new CreateDirectoryCommand(itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
+            DeleteItemCommand = new DeleteItemCommand(itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
 
             ListBoxItemsContextMenu = new ListBoxItemsContextMenu(this);
         }
-
-        public event Action CurrentItemChanged;
 
         public Item CurrentItem
         {
             get => _currentItem;
             set
             {
+                ParentItem = _currentItem;
                 _currentItem = value;
                 ListBoxItemsContextMenu = new ListBoxItemsContextMenu(this);
                 OnCurrentItemChanged();
             }
         }
+
+        public Item ParentItem { get; set; }
 
         public MessageViewModel MessageViewModel { get; }
 
@@ -72,6 +73,7 @@ namespace WPF.ViewModels
         }
 
         public ICommand LoadItemsCommand { get; }
+        public ICommand RefreshItemsCommand { get; }
 
         public ICommand DownloadFileCommand { get; }
         public ICommand UploadFileCommand { get; }
@@ -79,6 +81,8 @@ namespace WPF.ViewModels
         public ICommand DeleteItemCommand { get; }
 
         public ContextMenu ListBoxItemsContextMenu { get; private set; }
+
+        public event Action CurrentItemChanged;
 
         public void Reset()
         {

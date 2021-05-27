@@ -1,16 +1,19 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BookeryApi.Services.Storage;
 using Domain.Models;
 
 namespace WPF.Commands
 {
-    class CreateDirectoryCommand : AsyncCommand
+    internal class CreateDirectoryCommand : AsyncCommand
     {
+        private readonly Action _callback;
         private readonly IItemService _itemService;
 
-        public CreateDirectoryCommand(IItemService itemService)
+        public CreateDirectoryCommand(IItemService itemService, Action callback)
         {
             _itemService = itemService;
+            _callback = callback;
         }
 
         public override async Task ExecuteAsync(object parameter)
@@ -20,6 +23,8 @@ namespace WPF.Commands
                 return;
 
             await _itemService.CreateDirectory(item.Path + "/" + "New Folder");
+
+            _callback();
         }
     }
 }

@@ -11,13 +11,13 @@ using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    internal class LoadItemsCommand : AsyncCommand
+    internal class RefreshItemsCommand : AsyncCommand
     {
         private readonly HomeViewModel _homeViewModel;
         private readonly IItemService _itemService;
         private readonly PathBuilder _pathBuilder;
 
-        public LoadItemsCommand(HomeViewModel homeViewModel, IItemService itemService)
+        public RefreshItemsCommand(HomeViewModel homeViewModel, IItemService itemService)
         {
             _homeViewModel = homeViewModel;
             _itemService = itemService;
@@ -32,22 +32,12 @@ namespace WPF.Commands
 
             if (parameter is Item item)
             {
-                if (item.Name == "[..]")
-                {
-                    _pathBuilder.GetLastNode();
-                    _homeViewModel.CurrentItem = await _itemService.GetItem(_pathBuilder.GetPath());
-                }
-                else
-                {
-                    _pathBuilder.AddNode(item.Name);
+                _pathBuilder.ParsePath(item.Path);
 
-                    if (_pathBuilder.IsFile())
-                    {
-                        MessageBox.Show("This is a file.");
-                        return;
-                    }
-
-                    _homeViewModel.CurrentItem = item;
+                if (_pathBuilder.IsFile())
+                {
+                    MessageBox.Show("This is a file.");
+                    return;
                 }
 
                 if (_pathBuilder.GetDepth(_pathBuilder.GetPath()) > 2)
@@ -57,7 +47,7 @@ namespace WPF.Commands
                         IsDirectory = true,
                         Size = null,
                         Path = _pathBuilder.GetPath()
-                    }, this, _homeViewModel));
+                    }, _homeViewModel.LoadItemsCommand, _homeViewModel));
             }
 
             try
@@ -66,7 +56,7 @@ namespace WPF.Commands
 
                 foreach (var subItem in subItems)
                 {
-                    var itemControl = new ItemControl(subItem, this, _homeViewModel);
+                    var itemControl = new ItemControl(subItem, _homeViewModel.LoadItemsCommand, _homeViewModel);
                     if (subItem.IsDirectory)
                         itemControl.ContextMenu = new DirectoryContextMenu(_homeViewModel, itemControl);
                     else

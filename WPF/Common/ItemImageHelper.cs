@@ -6,8 +6,6 @@ namespace WPF.Common
 {
     internal class ItemImageHelper
     {
-        private static PathBuilder _pathBuilder = new PathBuilder();
-
         public static BitmapImage GetImage(Item item)
         {
             var bitmapImage = new BitmapImage();

@@ -5,7 +5,7 @@ using WPF.ViewModels;
 
 namespace WPF.Common.ContextMenus
 {
-    class FileContextMenu : ContextMenu
+    internal class FileContextMenu : ContextMenu
     {
         public FileContextMenu(HomeViewModel homeViewModel, ItemControl caller)
         {

@@ -18,6 +18,20 @@ namespace BookeryApi.Services.Storage
             _httpClient.BaseAddress = new Uri("http://localhost:42396/api/Item/");
         }
 
+        public async Task<Item> GetItem(string path)
+        {
+            var response = await _httpClient.GetAsync($"item/{path}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var item = await response.Content.ReadAsAsync<Item>();
+
+                return item;
+            }
+
+            return null;
+        }
+
         public async Task<List<Item>> GetSubItems(string path)
         {
             var response = await _httpClient.GetAsync($"sub-items/{path}");

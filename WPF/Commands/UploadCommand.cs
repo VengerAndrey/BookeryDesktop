@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BookeryApi.Services.Storage;
@@ -7,13 +8,15 @@ using Microsoft.Win32;
 
 namespace WPF.Commands
 {
-    class UploadCommand : AsyncCommand
+    internal class UploadCommand : AsyncCommand
     {
+        private readonly Action _callback;
         private readonly IItemService _itemService;
 
-        public UploadCommand(IItemService itemService)
+        public UploadCommand(IItemService itemService, Action callback)
         {
             _itemService = itemService;
+            _callback = callback;
         }
 
         public override async Task ExecuteAsync(object parameter)
@@ -34,6 +37,8 @@ namespace WPF.Commands
                 };
 
                 await _itemService.UploadFile(item.Path + "/" + fileName, multipartFormDataContent);
+
+                _callback();
             }
         }
     }

@@ -12,8 +12,8 @@ namespace WPF.Controls
     /// </summary>
     public partial class ItemControl : UserControl
     {
-        private readonly ICommand _loadItemsCommand;
         private readonly HomeViewModel _homeViewModel;
+        private readonly ICommand _loadItemsCommand;
 
         public ItemControl(Item item, ICommand loadItemsCommand, HomeViewModel homeViewModel)
         {
@@ -29,8 +29,7 @@ namespace WPF.Controls
 
         private void ItemControl_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _homeViewModel.CurrentItem = Item;
-            _loadItemsCommand.Execute(this);
+            _loadItemsCommand.Execute(Item);
         }
     }
 }

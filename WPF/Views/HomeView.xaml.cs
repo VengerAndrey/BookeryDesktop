@@ -19,7 +19,7 @@ namespace WPF.Views
         private void ShareBorder_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var homeViewModel = DataContext as HomeViewModel;
-            if(homeViewModel is null)
+            if (homeViewModel is null)
                 return;
             var border = sender as Border;
             var contentPresenter = border?.Child as ContentPresenter;

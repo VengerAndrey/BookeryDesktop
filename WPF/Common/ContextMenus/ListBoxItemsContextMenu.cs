@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using WPF.Controls;
 using WPF.ViewModels;
 
 namespace WPF.Common.ContextMenus
 {
-    class ListBoxItemsContextMenu : ContextMenu
+    internal class ListBoxItemsContextMenu : ContextMenu
     {
         public ListBoxItemsContextMenu(HomeViewModel homeViewModel)
         {

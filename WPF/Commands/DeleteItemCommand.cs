@@ -1,17 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using BookeryApi.Services.Storage;
 using WPF.Controls;
 
 namespace WPF.Commands
 {
-    class DeleteItemCommand : AsyncCommand
+    internal class DeleteItemCommand : AsyncCommand
     {
+        private readonly Action _callback;
         private readonly IItemService _itemService;
 
-        public DeleteItemCommand(IItemService itemService)
+        public DeleteItemCommand(IItemService itemService, Action callback)
         {
             _itemService = itemService;
+            _callback = callback;
         }
 
         public override async Task ExecuteAsync(object parameter)
@@ -25,13 +28,10 @@ namespace WPF.Commands
             var response = await _itemService.Delete(item.Path);
 
             if (response)
-            {
-                MessageBox.Show($"Successfully deleted {item.Name}.");
-            }
+                _callback();
+            //MessageBox.Show($"Successfully deleted {item.Name}.");
             else
-            {
                 MessageBox.Show($"Can't delete {item.Name}.");
-            }
         }
     }
 }

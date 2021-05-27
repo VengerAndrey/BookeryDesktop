@@ -8,6 +8,7 @@ namespace BookeryApi.Services.Storage
 {
     public interface IItemService
     {
+        Task<Item> GetItem(string path);
         Task<List<Item>> GetSubItems(string path);
         Task<Item> CreateDirectory(string path);
         Task<Item> UploadFile(string path, MultipartFormDataContent content);
