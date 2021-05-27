@@ -24,7 +24,7 @@ namespace WPF.Controls
         public Item Item { get; set; }
         public BitmapImage Image { get; set; }
 
-        private void ItemControl_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void ItemControl_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _loadItemsCommand.Execute(this);
         }

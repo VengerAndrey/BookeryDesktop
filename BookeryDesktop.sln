@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFramework", "EntityFr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF", "WPF\WPF.csproj", "{3D497EB9-E96B-404F-B63D-BE88E21631A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookeryApi", "BookeryApi\BookeryApi.csproj", "{A9F95067-6EF6-45BE-B27C-BC64BBAECC8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookeryApi", "BookeryApi\BookeryApi.csproj", "{A9F95067-6EF6-45BE-B27C-BC64BBAECC8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

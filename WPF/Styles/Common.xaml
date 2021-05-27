@@ -107,4 +107,67 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Context menu -->
+    <Style x:Key="StyleContextMenu" TargetType="ContextMenu">
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="OverridesDefaultStyle"
+                Value="True" />
+        <Setter Property="Grid.IsSharedSizeScope"
+                Value="True" />
+        <Setter Property="HasDropShadow"
+                Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border x:Name="Border"
+                            Padding="2"
+                            Background="{StaticResource BrushPrimary2}"
+                            BorderBrush="{StaticResource BrushPrimary3}"
+                            BorderThickness="2"
+                            CornerRadius="5">
+                        <StackPanel IsItemsHost="True"
+                                    KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="StyleContextMenuItem" TargetType="MenuItem">
+        <Setter Property="Header" Value="{Binding Header}" />
+        <Setter Property="Command" Value="{Binding Command, IsAsync=True}" />
+        <Setter Property="CommandParameter"
+                Value="{Binding Path=PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" />
+        <Setter Property="CommandTarget"
+                Value="{Binding Path=PlacementTarget ,RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" />
+        <Setter Property="Icon" Value="{Binding Image}" />
+        <Setter Property="Background" Value="{StaticResource BrushPrimary2}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Image}" Height="22" Margin="5 5 0 5"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ContentPresenter Content="{TemplateBinding Header}"
+                                              ContentSource="Header" Margin="5 5 10 5"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              RecognizesAccessKey="True" />
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter Property="Background" TargetName="Border" Value="{StaticResource BrushPrimary3}" />
+                            <Setter Property="BorderBrush" TargetName="Border" Value="{StaticResource BrushPrimary2}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

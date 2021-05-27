@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using BookeryApi.Services.Storage;
 using Domain.Models;
 using WPF.Commands;
+using WPF.Common;
 using WPF.Controls;
 
 namespace WPF.ViewModels
 {
     internal class HomeViewModel : BaseViewModel
     {
-        public MessageViewModel MessageViewModel { get; }
+        private readonly ICommand _commandDownloadItem;
 
         private List<ItemControl> _itemControls;
 
@@ -19,13 +19,24 @@ namespace WPF.ViewModels
 
         public HomeViewModel(IShareService shareService, IItemService itemService)
         {
+            _commandDownloadItem = new DownloadItemCommand(itemService);
+
             MessageViewModel = new MessageViewModel();
+
+            ItemsContextMenuItems = new List<ContextMenuItemViewModel>();
+            ItemsContextMenuItems.Add(new ContextMenuItemViewModel
+            {
+                Header = "Download", Command = _commandDownloadItem,
+                Image = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Download)
+            });
 
             LoadSharesCommand = new LoadSharesCommand(this, shareService);
             //LoadSharesCommand.Execute(null);
 
             LoadItemsCommand = new LoadItemsCommand(this, itemService);
         }
+
+        public MessageViewModel MessageViewModel { get; }
 
         public IEnumerable<Share> Shares
         {
@@ -61,9 +72,11 @@ namespace WPF.ViewModels
 
         public ICommand LoadItemsCommand { get; }
 
+        public List<ContextMenuItemViewModel> ItemsContextMenuItems { get; set; }
+
         public void Reset()
         {
-            if(_itemControls != null && _itemControls.Count > 0)
+            if (_itemControls != null && _itemControls.Count > 0)
                 _itemControls.Clear();
             _shares = null;
         }

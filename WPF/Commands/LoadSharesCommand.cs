@@ -20,7 +20,7 @@ namespace WPF.Commands
         {
             try
             {
-                _homeViewModel.Shares = await _shareService.GetAll(); ;
+                _homeViewModel.Shares = await _shareService.GetAll();
             }
             catch (Exception)
             {
