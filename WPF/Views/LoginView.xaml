@@ -10,11 +10,8 @@
             Background="{StaticResource BrushPrimary1}"
             BorderBrush="{StaticResource BrushPrimary2}"
             CornerRadius="10"
-            BorderThickness="3">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="10" Color="Gray" />
-        </Border.Effect>
-        <Grid>
+            BorderThickness="3" SnapsToDevicePixels="True">
+        <Grid SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

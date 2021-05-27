@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Domain.Models;
 using WPF.ViewModels;
@@ -18,19 +19,32 @@ namespace WPF.Views
         private void ShareBorder_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var homeViewModel = DataContext as HomeViewModel;
+            if(homeViewModel is null)
+                return;
             var border = sender as Border;
             var contentPresenter = border?.Child as ContentPresenter;
             var share = contentPresenter?.Content as Share;
-            homeViewModel?.LoadItemsCommand.Execute($"{share.Id}/root");
+            var item = new Item
+            {
+                Name = "root",
+                IsDirectory = true,
+                Size = null,
+                Path = $"{share?.Id}/root"
+            };
+            homeViewModel.CurrentItem = item;
+            homeViewModel.LoadItemsCommand.Execute(item.Path);
         }
 
-        /*private void ItemBorder_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ListBoxItems_OnLoaded(object sender, RoutedEventArgs e)
         {
             var homeViewModel = DataContext as HomeViewModel;
-            var border = sender as Border;
-            var textBlock = border?.Child as TextBlock;
-            var item = textBlock?.DataContext as Item;
-            homeViewModel?.LoadItemsCommand.Execute(item);
-        }*/
+            if (homeViewModel is null)
+                return;
+
+            homeViewModel.CurrentItemChanged += () =>
+            {
+                ListBoxItems.ContextMenu = homeViewModel.ListBoxItemsContextMenu;
+            };
+        }
     }
 }

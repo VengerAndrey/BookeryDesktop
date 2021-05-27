@@ -69,6 +69,13 @@ namespace BookeryApi.Services.Storage
             return null;
         }
 
+        public async Task<bool> Delete(string path)
+        {
+            var response = await _httpClient.DeleteAsync($"delete/{path}");
+
+            return await response.Content.ReadAsAsync<bool>();
+        }
+
         public void SetBearerToken(string accessToken)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);

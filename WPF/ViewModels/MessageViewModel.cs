@@ -1,6 +1,6 @@
 ﻿namespace WPF.ViewModels
 {
-    internal class MessageViewModel : BaseViewModel
+    public class MessageViewModel : BaseViewModel
     {
         private string _message;
 

@@ -25,14 +25,6 @@
                     <DataTemplate>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
                                    FontSize="14" Text="{Binding Name}" />
-                        <!--
-                        <Border x:Name="ShareBorder" Margin="5" Padding="5" Background="{StaticResource BrushPrimary1}" 
-                                CornerRadius="5" SnapsToDevicePixels="True"
-                                MouseLeftButtonDown="ShareBorder_OnMouseLeftButtonDown">
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" 
-                                       FontSize="14" Text="{Binding Name}"/>
-                        </Border>
-                        -->
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <ListBox.ItemContainerStyle>
@@ -81,32 +73,14 @@
                 </ListBox.Style>
             </ListBox>
         </Grid>
-        <!-- 
-        <ItemsControl Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Shares}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border x:Name="ShareBorder" Padding="5" SnapsToDevicePixels="true"
-                            Background="{StaticResource BrushPrimary2}" CornerRadius="5"
-                            Margin="5" MouseLeftButtonDown="ShareBorder_OnMouseLeftButtonDown">
-                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        -->
         <Grid Grid.Row="0" Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Course files" />
-            <ListBox Grid.Row="1" HorizontalContentAlignment="Stretch" BorderThickness="0"
-                     ItemsSource="{Binding ItemControls}">
+            <ListBox Name="ListBoxItems" Grid.Row="1" HorizontalContentAlignment="Stretch" BorderThickness="0"
+                     ItemsSource="{Binding ItemControls}" Loaded="ListBoxItems_OnLoaded">
                 <ListBox.Style>
                     <Style TargetType="{x:Type ListBox}">
                         <Style.Triggers>
@@ -129,11 +103,6 @@
                         </Style.Triggers>
                     </Style>
                 </ListBox.Style>
-                <ListBox.ContextMenu>
-                    <ContextMenu ItemsSource="{Binding ItemsContextMenuItems}"
-                                 Style="{StaticResource StyleContextMenu}"
-                                 ItemContainerStyle="{StaticResource StyleContextMenuItem}" />
-                </ListBox.ContextMenu>
             </ListBox>
         </Grid>
         <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10"
@@ -141,18 +110,5 @@
                    HorizontalAlignment="Center" DataContext="{Binding MessageViewModel}"
                    Text="{Binding Message}"
                    Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <!--
-        <ListBox Grid.Column="1" ItemsSource="{Binding Items}" HorizontalContentAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border Name="ItemBorder" Padding="10" SnapsToDevicePixels="true"
-                            Background="{StaticResource BrushPrimary2}" CornerRadius="5"
-                            Margin="5" MouseLeftButtonDown="ItemBorder_OnMouseLeftButtonDown">
-                        <TextBlock FontSize="18" Text="{Binding Name}" />
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        -->
     </Grid>
 </UserControl>

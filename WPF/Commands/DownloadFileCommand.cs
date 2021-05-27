@@ -6,11 +6,11 @@ using WPF.Controls;
 
 namespace WPF.Commands
 {
-    internal class DownloadItemCommand : AsyncCommand
+    internal class DownloadFileCommand : AsyncCommand
     {
         private readonly IItemService _itemService;
 
-        public DownloadItemCommand(IItemService itemService)
+        public DownloadFileCommand(IItemService itemService)
         {
             _itemService = itemService;
         }

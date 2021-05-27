@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using BookeryApi.Services.Storage;
 using Domain.Models;
 using WPF.Common;
+using WPF.Common.ContextMenus;
 using WPF.Controls;
 using WPF.ViewModels;
 
@@ -44,14 +46,27 @@ namespace WPF.Commands
                 }
 
                 if (_pathBuilder.GetDepth(_pathBuilder.GetPath()) > 2)
-                    itemControls.Add(new ItemControl(new Item {Name = "[..]", IsDirectory = true}, this));
+                    itemControls.Add(new ItemControl(new Item {Name = "[..]", IsDirectory = true}, this, _homeViewModel));
             }
 
             try
             {
                 var items = await _itemService.GetSubItems(_pathBuilder.GetPath());
 
-                foreach (var item in items) itemControls.Add(new ItemControl(item, this));
+                foreach (var item in items)
+                {
+                    var newItemControl = new ItemControl(item, this, _homeViewModel);
+                    if (item.IsDirectory)
+                    {
+                        newItemControl.ContextMenu = new DirectoryContextMenu(_homeViewModel, newItemControl);
+                    }
+                    else
+                    {
+                        newItemControl.ContextMenu = new FileContextMenu(_homeViewModel, newItemControl);
+                    }
+                    
+                    itemControls.Add(newItemControl);
+                }
 
                 _homeViewModel.ItemControls = itemControls;
             }

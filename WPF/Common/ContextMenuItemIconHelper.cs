@@ -19,6 +19,9 @@ namespace WPF.Common
 
     internal enum ContextMenuIconName
     {
-        Download
+        Download,
+        Upload,
+        CreateDirectory,
+        Delete
     }
 }

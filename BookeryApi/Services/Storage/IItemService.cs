@@ -12,6 +12,7 @@ namespace BookeryApi.Services.Storage
         Task<Item> CreateDirectory(string path);
         Task<Item> UploadFile(string path, MultipartFormDataContent content);
         Task<Stream> DownloadFile(string path);
+        Task<bool> Delete(string path);
         void SetBearerToken(string accessToken);
     }
 }
