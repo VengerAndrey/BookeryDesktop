@@ -20,6 +20,7 @@ namespace WPF.ViewModels
         public HomeViewModel(IShareService shareService, IItemService itemService)
         {
             MessageViewModel = new MessageViewModel();
+            DataInputViewModel = new DataInputViewModel();
 
             LoadSharesCommand = new LoadSharesCommand(this, shareService);
 
@@ -28,7 +29,7 @@ namespace WPF.ViewModels
             DownloadFileCommand = new DownloadFileCommand(itemService);
             UploadFileCommand = new UploadCommand(itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
             CreateDirectoryCommand =
-                new CreateDirectoryCommand(itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
+                new CreateDirectoryCommand(this, itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
             DeleteItemCommand = new DeleteItemCommand(itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
 
             ListBoxItemsContextMenu = new ListBoxItemsContextMenu(this);
@@ -49,6 +50,7 @@ namespace WPF.ViewModels
         public Item ParentItem { get; set; }
 
         public MessageViewModel MessageViewModel { get; }
+        public DataInputViewModel DataInputViewModel { get; }
 
         public IEnumerable<Share> Shares
         {

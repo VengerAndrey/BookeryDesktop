@@ -2,29 +2,48 @@
 using System.Threading.Tasks;
 using BookeryApi.Services.Storage;
 using Domain.Models;
+using WPF.ViewModels;
 
 namespace WPF.Commands
 {
     internal class CreateDirectoryCommand : AsyncCommand
     {
         private readonly Action _callback;
+        private readonly HomeViewModel _homeViewModel;
         private readonly IItemService _itemService;
 
-        public CreateDirectoryCommand(IItemService itemService, Action callback)
+        private Item _lastItem;
+
+        public CreateDirectoryCommand(HomeViewModel homeViewModel, IItemService itemService, Action callback)
         {
+            _homeViewModel = homeViewModel;
             _itemService = itemService;
             _callback = callback;
         }
 
         public override async Task ExecuteAsync(object parameter)
         {
-            var item = parameter as Item;
-            if (item is null)
-                return;
+            if (parameter is Item item)
+            {
+                _lastItem = item;
 
-            await _itemService.CreateDirectory(item.Path + "/" + "New Folder");
+                _homeViewModel.DataInputViewModel.Name = "Enter directory name:";
+            }
+            else if (parameter is string directoryName)
+            {
+                if (_lastItem is null)
+                {
+                    throw new Exception();
+                }
 
-            _callback();
+                await _itemService.CreateDirectory(_lastItem.Path + "/" + directoryName);
+
+                _lastItem = null;
+
+                _homeViewModel.DataInputViewModel.CancelCommand.Execute(null);
+
+                _callback();
+            }
         }
     }
 }
