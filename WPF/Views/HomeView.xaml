@@ -22,7 +22,8 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Your courses" />
             <ListBox Name="ListBoxShares" Grid.Row="1" BorderThickness="0" ItemsSource="{Binding Shares}"
-                     ContextMenu="{Binding ListBoxSharesContextMenu}">
+                     ContextMenu="{Binding ListBoxSharesContextMenu}"
+                     SelectedItem="{Binding CurrentShare}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"

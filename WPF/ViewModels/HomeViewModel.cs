@@ -13,6 +13,7 @@ namespace WPF.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
+        private Share _currentShare;
         private Item _currentItem;
         private List<ItemControl> _itemControls;
         private IEnumerable<Share> _shares;
@@ -54,7 +55,15 @@ namespace WPF.ViewModels
             ListBoxSharesContextMenu = new ListBoxSharesContextMenu(this);
         }
 
-        public Share CurrentShare { get; set; }
+        public Share CurrentShare
+        {
+            get => _currentShare;
+            set
+            {
+                _currentShare = value;
+                OnPropertyChanged(nameof(CurrentShare));
+            }
+        }
 
         public Item ParentItem { get; set; }
 

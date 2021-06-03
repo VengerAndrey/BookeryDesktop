@@ -35,6 +35,9 @@ namespace WPF.Views
                 Size = null,
                 Path = $"{share?.Id}/root"
             };
+
+            ListBoxShares.SelectedIndex = 2;
+
             homeViewModel.CurrentItem = item;
             homeViewModel.CurrentShare = share;
             homeViewModel.LoadItemsCommand.Execute(item.Path);
