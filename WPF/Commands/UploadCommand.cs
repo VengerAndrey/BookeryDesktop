@@ -23,7 +23,9 @@ namespace WPF.Commands
         {
             var item = parameter as Item;
             if (item is null)
+            {
                 return;
+            }
 
             var openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)

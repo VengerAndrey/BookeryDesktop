@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using WPF.Commands;
 
 namespace WPF.ViewModels
@@ -7,18 +8,23 @@ namespace WPF.ViewModels
     {
         private string _name;
 
+        private string _value;
+
+        public DataInputViewModel()
+        {
+            CancelCommand = new CancelDataInputCommand(this);
+        }
+
         public string Name
         {
             get => _name;
-            set 
+            set
             {
                 _name = value;
                 OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(IsShown));
             }
         }
-
-        private string _value;
 
         public string Value
         {
@@ -34,9 +40,28 @@ namespace WPF.ViewModels
 
         public ICommand CancelCommand { get; }
 
-        public DataInputViewModel()
+        public DataInputType DataInputType { get; private set; }
+
+        public void Show(DataInputType dataInputType)
         {
-            CancelCommand = new CancelDataInputCommand(this);
+            DataInputType = dataInputType;
+            switch (dataInputType)
+            {
+                case DataInputType.ShareName:
+                    Name = "Enter course name:";
+                    break;
+                case DataInputType.DirectoryName:
+                    Name = "Enter directory name:";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dataInputType), dataInputType, null);
+            }
         }
+    }
+
+    public enum DataInputType
+    {
+        ShareName,
+        DirectoryName
     }
 }

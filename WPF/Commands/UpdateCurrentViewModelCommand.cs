@@ -26,7 +26,9 @@ namespace WPF.Commands
         public void Execute(object parameter)
         {
             if (parameter is ViewType viewType)
+            {
                 _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel(viewType);
+            }
         }
     }
 }

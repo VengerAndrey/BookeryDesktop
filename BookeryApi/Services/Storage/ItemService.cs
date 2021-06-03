@@ -78,7 +78,10 @@ namespace BookeryApi.Services.Storage
         {
             var response = await _httpClient.GetAsync($"download-file/{path}");
 
-            if (response.IsSuccessStatusCode) return await response.Content.ReadAsStreamAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStreamAsync();
+            }
 
             return null;
         }

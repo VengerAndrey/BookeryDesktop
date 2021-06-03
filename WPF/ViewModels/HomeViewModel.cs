@@ -14,7 +14,6 @@ namespace WPF.ViewModels
     {
         private Item _currentItem;
         private List<ItemControl> _itemControls;
-
         private IEnumerable<Share> _shares;
 
         public HomeViewModel(IShareService shareService, IItemService itemService)
@@ -23,17 +22,39 @@ namespace WPF.ViewModels
             DataInputViewModel = new DataInputViewModel();
 
             LoadSharesCommand = new LoadSharesCommand(this, shareService);
+            CreateShareCommand = new CreateShareCommand(this);
+
+            CreateCommand =
+                new CreateCommand(this, shareService, itemService, () =>
+                {
+                    LoadSharesCommand.Execute(null);
+                    RefreshItemsCommand.Execute(CurrentItem);
+                });
 
             LoadItemsCommand = new LoadItemsCommand(this, itemService);
             RefreshItemsCommand = new RefreshItemsCommand(this, itemService);
             DownloadFileCommand = new DownloadFileCommand(itemService);
-            UploadFileCommand = new UploadCommand(itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
-            CreateDirectoryCommand =
-                new CreateDirectoryCommand(this, itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
-            DeleteItemCommand = new DeleteItemCommand(itemService, () => { RefreshItemsCommand.Execute(CurrentItem); });
+            UploadFileCommand = new UploadCommand(itemService, () => RefreshItemsCommand.Execute(CurrentItem));
+
+            CreateDirectoryCommand = new CreateDirectoryCommand(this);
+
+            DeleteShareCommand = new DeleteShareCommand(shareService, share =>
+            {
+                LoadSharesCommand.Execute(null);
+                if (share.Id == CurrentShare.Id)
+                {
+                    LoadItemsCommand.Execute(null);
+                }
+            });
+            DeleteItemCommand = new DeleteItemCommand(itemService, () => RefreshItemsCommand.Execute(CurrentItem));
 
             ListBoxItemsContextMenu = new ListBoxItemsContextMenu(this);
+            ListBoxSharesContextMenu = new ListBoxSharesContextMenu(this);
         }
+
+        public Share CurrentShare { get; set; }
+
+        public Item ParentItem { get; set; }
 
         public Item CurrentItem
         {
@@ -47,11 +68,6 @@ namespace WPF.ViewModels
             }
         }
 
-        public Item ParentItem { get; set; }
-
-        public MessageViewModel MessageViewModel { get; }
-        public DataInputViewModel DataInputViewModel { get; }
-
         public IEnumerable<Share> Shares
         {
             get => _shares;
@@ -61,8 +77,6 @@ namespace WPF.ViewModels
                 OnPropertyChanged(nameof(Shares));
             }
         }
-
-        public ICommand LoadSharesCommand { get; }
 
         public List<ItemControl> ItemControls
         {
@@ -74,22 +88,35 @@ namespace WPF.ViewModels
             }
         }
 
+        public ICommand LoadSharesCommand { get; }
         public ICommand LoadItemsCommand { get; }
         public ICommand RefreshItemsCommand { get; }
 
-        public ICommand DownloadFileCommand { get; }
-        public ICommand UploadFileCommand { get; }
+        public ICommand CreateCommand { get; }
+        public ICommand CreateShareCommand { get; }
         public ICommand CreateDirectoryCommand { get; }
+
+        public ICommand DeleteShareCommand { get; }
         public ICommand DeleteItemCommand { get; }
 
+        public ICommand DownloadFileCommand { get; }
+        public ICommand UploadFileCommand { get; }
+
         public ContextMenu ListBoxItemsContextMenu { get; private set; }
+        public ContextMenu ListBoxSharesContextMenu { get; }
+
+        public MessageViewModel MessageViewModel { get; }
+        public DataInputViewModel DataInputViewModel { get; }
 
         public event Action CurrentItemChanged;
 
         public void Reset()
         {
             if (_itemControls != null && _itemControls.Count > 0)
+            {
                 _itemControls.Clear();
+            }
+
             _shares = null;
         }
 

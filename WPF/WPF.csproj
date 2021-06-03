@@ -23,6 +23,7 @@
     <None Remove="Resources\ItemImages\xls.png" />
     <None Remove="Resources\ItemImages\xlsx.png" />
     <None Remove="Resources\ItemImages\zip.png" />
+    <None Remove="Resources\noFiles.png" />
     <None Remove="Resources\user.png" />
   </ItemGroup>
 
@@ -63,6 +64,7 @@
     <Resource Include="Resources\ItemImages\xlsx.png" />
     <Resource Include="Resources\ItemImages\xls.png" />
     <Resource Include="Resources\ItemImages\zip.png" />
+    <Resource Include="Resources\noFiles.png" />
     <Resource Include="Resources\user.png" />
   </ItemGroup>
 

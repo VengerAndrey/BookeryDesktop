@@ -20,7 +20,10 @@ namespace BookeryApi.Services.User
         {
             var response = await _httpClient.GetAsync("");
 
-            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<Domain.Models.User>();
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<Domain.Models.User>();
+            }
 
             throw new DataNotFoundException("User");
         }

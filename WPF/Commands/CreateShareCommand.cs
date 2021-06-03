@@ -3,19 +3,18 @@ using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    internal class CreateDirectoryCommand : AsyncCommand
+    internal class CreateShareCommand : AsyncCommand
     {
         private readonly HomeViewModel _homeViewModel;
 
-        public CreateDirectoryCommand(HomeViewModel homeViewModel)
+        public CreateShareCommand(HomeViewModel homeViewModel)
         {
             _homeViewModel = homeViewModel;
         }
 
         public override Task ExecuteAsync(object parameter)
         {
-            _homeViewModel.DataInputViewModel.Show(DataInputType.DirectoryName);
-            _homeViewModel.CreateCommand.Execute(parameter);
+            _homeViewModel.DataInputViewModel.Show(DataInputType.ShareName);
             return Task.CompletedTask;
         }
     }

@@ -19,11 +19,15 @@ namespace WPF.Commands
         {
             var itemControl = parameter as ItemControl;
             if (itemControl is null)
+            {
                 return;
+            }
 
             var item = itemControl.Item;
             if (item.IsDirectory)
+            {
                 return;
+            }
 
             var stream = await _itemService.DownloadFile(item.Path);
             byte[] bytes;
@@ -35,7 +39,10 @@ namespace WPF.Commands
 
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = item.Name;
-            if (saveFileDialog.ShowDialog() == true) await File.WriteAllBytesAsync(saveFileDialog.FileName, bytes);
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                await File.WriteAllBytesAsync(saveFileDialog.FileName, bytes);
+            }
         }
     }
 }

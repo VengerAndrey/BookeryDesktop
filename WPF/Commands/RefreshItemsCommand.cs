@@ -28,7 +28,10 @@ namespace WPF.Commands
         {
             var itemControls = new List<ItemControl>();
 
-            if (parameter is string path) _pathBuilder.ParsePath(path);
+            if (parameter is string path)
+            {
+                _pathBuilder.ParsePath(path);
+            }
 
             if (parameter is Item item)
             {
@@ -41,6 +44,7 @@ namespace WPF.Commands
                 }
 
                 if (_pathBuilder.GetDepth(_pathBuilder.GetPath()) > 2)
+                {
                     itemControls.Add(new ItemControl(new Item
                     {
                         Name = "[..]",
@@ -48,21 +52,29 @@ namespace WPF.Commands
                         Size = null,
                         Path = _pathBuilder.GetPath()
                     }, _homeViewModel.LoadItemsCommand, _homeViewModel));
+                }
             }
 
             try
             {
                 var subItems = await _itemService.GetSubItems(_pathBuilder.GetPath());
 
-                foreach (var subItem in subItems)
+                if (subItems != null)
                 {
-                    var itemControl = new ItemControl(subItem, _homeViewModel.LoadItemsCommand, _homeViewModel);
-                    if (subItem.IsDirectory)
-                        itemControl.ContextMenu = new DirectoryContextMenu(_homeViewModel, itemControl);
-                    else
-                        itemControl.ContextMenu = new FileContextMenu(_homeViewModel, itemControl);
+                    foreach (var subItem in subItems)
+                    {
+                        var itemControl = new ItemControl(subItem, _homeViewModel.LoadItemsCommand, _homeViewModel);
+                        if (subItem.IsDirectory)
+                        {
+                            itemControl.ContextMenu = new DirectoryContextMenu(_homeViewModel, itemControl);
+                        }
+                        else
+                        {
+                            itemControl.ContextMenu = new FileContextMenu(_homeViewModel, itemControl);
+                        }
 
-                    itemControls.Add(itemControl);
+                        itemControls.Add(itemControl);
+                    }
                 }
 
                 _homeViewModel.ItemControls = itemControls;

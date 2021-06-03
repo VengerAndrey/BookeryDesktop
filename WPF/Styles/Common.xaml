@@ -16,10 +16,7 @@
     <!-- Converters -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:ValueToParameterEqualityConverter x:Key="ValueToParameterEqualityConverter" />
-
-    <!-- Images -->
-    <Image x:Key="ImageFolder" Source="../Resources/folder.png" Stretch="UniformToFill" />
-    <Image x:Key="ImageUser" Source="../Resources/user.png" Stretch="UniformToFill" />
+    <converters:ListBoxSelectionToBoolConverter x:Key="ListBoxSelectionToBoolConverter" />
 
     <!-- Buttons -->
     <Style TargetType="Button">

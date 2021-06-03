@@ -4,7 +4,7 @@ using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    class CancelDataInputCommand : ICommand
+    internal class CancelDataInputCommand : ICommand
     {
         private readonly DataInputViewModel _dataInputViewModel;
 

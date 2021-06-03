@@ -21,7 +21,8 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Your courses" />
-            <ListBox Grid.Row="1" BorderThickness="0" ItemsSource="{Binding Shares}">
+            <ListBox Name="ListBoxShares" Grid.Row="1" BorderThickness="0" ItemsSource="{Binding Shares}"
+                     ContextMenu="{Binding ListBoxSharesContextMenu}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
@@ -36,6 +37,7 @@
                                     <Border Name="ShareBorder" Margin="2" Padding="5" CornerRadius="5"
                                             SnapsToDevicePixels="True"
                                             MouseLeftButtonDown="ShareBorder_OnMouseLeftButtonDown"
+                                            MouseRightButtonDown="ShareBorder_OnMouseRightButtonDown"
                                             Background="Transparent">
                                         <ContentPresenter />
                                     </Border>
@@ -90,12 +92,17 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate>
-                                            <Border Name="ShareBorder" Margin="2" Padding="5" CornerRadius="5"
+                                            <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                                     SnapsToDevicePixels="True"
                                                     Background="Transparent">
-                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
-                                                           TextAlignment="Center"
-                                                           FontSize="14" Text="Select a course to view files." />
+                                                <StackPanel Orientation="Vertical" HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center">
+                                                    <Image Source="../Resources/noFiles.png" Stretch="UniformToFill"
+                                                           Height="64" Width="64" />
+                                                    <TextBlock Margin="10" HorizontalAlignment="Center"
+                                                               TextAlignment="Center"
+                                                               FontSize="14" Text="It looks like it's empty here." />
+                                                </StackPanel>
                                             </Border>
                                         </ControlTemplate>
                                     </Setter.Value>
@@ -110,15 +117,15 @@
               Visibility="{Binding DataInputViewModel.IsShown, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" FontSize="16" Margin="5 12"
                        Text="{Binding DataInputViewModel.Name}" />
             <TextBox Grid.Column="1" Margin="5 10" FontSize="16" Text="{Binding DataInputViewModel.Value}" />
-            <Button Grid.Column="2" Margin="5" FontSize="16" Content="Submit" 
-                    Command="{Binding CreateDirectoryCommand}"
+            <Button Grid.Column="2" Margin="5" FontSize="16" Content="Submit"
+                    Command="{Binding CreateCommand}"
                     CommandParameter="{Binding DataInputViewModel.Value}" />
             <Button Grid.Column="3" Margin="5" FontSize="16" Content="Cancel"
                     Command="{Binding DataInputViewModel.CancelCommand}" />

@@ -8,15 +8,23 @@
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="40">
     <StackPanel Orientation="Vertical" Background="{StaticResource BrushPrimary2}">
-        <RadioButton Content="{StaticResource ImageFolder}" Style="{StaticResource StyleNavigationButton}"
+        <RadioButton Style="{StaticResource StyleNavigationButton}"
                      Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Home}"
                      IsChecked="{Binding CurrentViewModel, Mode=OneWay, 
             Converter={StaticResource ValueToParameterEqualityConverter}, 
-            ConverterParameter={x:Type viewModels:HomeViewModel}}" />
-        <RadioButton Content="{StaticResource ImageUser}" Style="{StaticResource StyleNavigationButton}"
+            ConverterParameter={x:Type viewModels:HomeViewModel}}">
+            <RadioButton.Content>
+                <Image Source="../Resources/folder.png" Stretch="UniformToFill" />
+            </RadioButton.Content>
+        </RadioButton>
+        <RadioButton Style="{StaticResource StyleNavigationButton}"
                      Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.User}"
                      IsChecked="{Binding CurrentViewModel, Mode=OneWay, 
             Converter={StaticResource ValueToParameterEqualityConverter}, 
-            ConverterParameter={x:Type viewModels:UserViewModel}}" />
+            ConverterParameter={x:Type viewModels:UserViewModel}}">
+            <RadioButton.Content>
+                <Image Source="../Resources/user.png" Stretch="UniformToFill" />
+            </RadioButton.Content>
+        </RadioButton>
     </StackPanel>
 </UserControl>

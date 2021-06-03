@@ -23,7 +23,10 @@ namespace BookeryApi.Services.Token
             var response = await _httpClient.PostAsJsonAsync("token", authenticationRequest)
                 .ConfigureAwait(false);
 
-            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<AuthenticationResponse>();
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<AuthenticationResponse>();
+            }
 
             throw new InvalidCredentialException();
         }
@@ -40,7 +43,10 @@ namespace BookeryApi.Services.Token
 
             var response = await _httpClient.PostAsJsonAsync("refresh-token", refreshTokenRequest);
 
-            if (response.IsSuccessStatusCode) return await response.Content.ReadAsAsync<AuthenticationResponse>();
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<AuthenticationResponse>();
+            }
 
             return null;
         }

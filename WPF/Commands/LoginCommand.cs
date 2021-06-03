@@ -21,7 +21,10 @@ namespace WPF.Commands
 
             _loginViewModel.PropertyChanged += (sender, e) =>
             {
-                if (e.PropertyName == nameof(LoginViewModel.CanLogin)) OnCanExecuteChanged();
+                if (e.PropertyName == nameof(LoginViewModel.CanLogin))
+                {
+                    OnCanExecuteChanged();
+                }
             };
         }
 

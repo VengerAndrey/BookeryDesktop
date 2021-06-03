@@ -21,17 +21,22 @@ namespace WPF.Commands
         {
             var itemControl = parameter as ItemControl;
             if (itemControl is null)
+            {
                 return;
+            }
 
             var item = itemControl.Item;
 
             var response = await _itemService.Delete(item.Path);
 
             if (response)
+            {
                 _callback();
-            //MessageBox.Show($"Successfully deleted {item.Name}.");
+            }
             else
+            {
                 MessageBox.Show($"Can't delete {item.Name}.");
+            }
         }
     }
 }
