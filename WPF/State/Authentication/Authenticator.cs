@@ -11,6 +11,7 @@ namespace WPF.State.Authentication
 {
     internal class Authenticator : IAuthenticator
     {
+        private readonly IAccessService _accessService;
         private readonly IItemService _itemService;
         private readonly IShareService _shareService;
         private readonly ITokenService _tokenService;
@@ -21,12 +22,13 @@ namespace WPF.State.Authentication
         private Timer _timer;
 
         public Authenticator(ITokenService tokenService, IShareService shareService, IItemService itemService,
-            IUserService userService)
+            IUserService userService, IAccessService accessService)
         {
             _tokenService = tokenService;
             _shareService = shareService;
             _itemService = itemService;
             _userService = userService;
+            _accessService = accessService;
         }
 
         public bool IsLoggedIn => _currentAuthenticationResponse != null;
@@ -66,6 +68,7 @@ namespace WPF.State.Authentication
             _itemService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
             _shareService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
             _userService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
+            _accessService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
         }
     }
 }

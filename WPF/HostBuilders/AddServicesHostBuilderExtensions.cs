@@ -15,6 +15,7 @@ namespace WPF.HostBuilders
                 services.AddSingleton<IShareService, ShareService>();
                 services.AddSingleton<IItemService, ItemService>();
                 services.AddSingleton<IUserService, UserService>();
+                services.AddSingleton<IAccessService, AccessService>();
 
                 services.AddSingleton<ITokenService, TokenService>();
             });

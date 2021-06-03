@@ -10,8 +10,18 @@ namespace WPF.Common.ContextMenus
         {
             var createShare = new MenuItem
             {
-                Header = "Create course",
+                Header = "Create",
                 Command = homeViewModel.CreateShareCommand,
+                Icon = new Image
+                {
+                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)
+                },
+                Style = Application.Current.FindResource("StyleContextMenuItem") as Style
+            };
+            var accessShareById = new MenuItem
+            {
+                Header = "Access by ID",
+                Command = homeViewModel.AccessShareByIdCommand,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)
@@ -20,6 +30,7 @@ namespace WPF.Common.ContextMenus
             };
 
             Items.Add(createShare);
+            Items.Add(accessShareById);
 
             Style = Application.Current.FindResource("StyleContextMenu") as Style;
         }

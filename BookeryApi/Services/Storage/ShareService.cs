@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using BookeryApi.Exceptions;
 using Domain.Models;
 
 namespace BookeryApi.Services.Storage
@@ -76,6 +78,11 @@ namespace BookeryApi.Services.Storage
         public async Task<bool> Delete(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"{id}");
+
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                throw new ForbiddenException();
+            }
 
             return response.IsSuccessStatusCode;
         }

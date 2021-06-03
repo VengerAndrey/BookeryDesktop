@@ -16,7 +16,6 @@
     <!-- Converters -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:ValueToParameterEqualityConverter x:Key="ValueToParameterEqualityConverter" />
-    <converters:ListBoxSelectionToBoolConverter x:Key="ListBoxSelectionToBoolConverter" />
 
     <!-- Buttons -->
     <Style TargetType="Button">

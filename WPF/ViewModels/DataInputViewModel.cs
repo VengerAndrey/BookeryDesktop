@@ -53,6 +53,9 @@ namespace WPF.ViewModels
                 case DataInputType.DirectoryName:
                     Name = "Enter directory name:";
                     break;
+                case DataInputType.ShareId:
+                    Name = "Enter course id:";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dataInputType), dataInputType, null);
             }
@@ -62,6 +65,7 @@ namespace WPF.ViewModels
     public enum DataInputType
     {
         ShareName,
-        DirectoryName
+        DirectoryName,
+        ShareId
     }
 }
