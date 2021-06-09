@@ -4,8 +4,8 @@ namespace WPF.ViewModels
 {
     public class MessageViewModel : BaseViewModel
     {
-        private string _message;
         private readonly Timer _timer;
+        private string _message;
 
         public MessageViewModel()
         {

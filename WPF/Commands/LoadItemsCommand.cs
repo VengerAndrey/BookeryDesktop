@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows;
 using BookeryApi.Services.Storage;
 using Domain.Models;
 using WPF.Common;
@@ -31,68 +30,55 @@ namespace WPF.Commands
             if (parameter is string path)
             {
                 _pathBuilder.ParsePath(path);
-            }
 
-            if (parameter is Item item)
-            {
-                if (item.Name == "[..]")
+                if (_pathBuilder.IsFile())
                 {
-                    _pathBuilder.GetLastNode();
-                    _homeViewModel.CurrentItem = await _itemService.GetItem(_pathBuilder.GetPath());
-                }
-                else
-                {
-                    _pathBuilder.AddNode(item.Name);
-
-                    if (_pathBuilder.IsFile())
-                    {
-                        MessageBox.Show("This is a file.");
-                        return;
-                    }
-
-                    _homeViewModel.CurrentItem = item;
+                    return;
                 }
 
                 if (_pathBuilder.GetDepth(_pathBuilder.GetPath()) > 2)
                 {
+                    var tempPath = _pathBuilder.GetPath();
+                    _pathBuilder.GetLastNode();
                     itemControls.Add(new ItemControl(new Item
                     {
                         Name = "[..]",
                         IsDirectory = true,
                         Size = null,
                         Path = _pathBuilder.GetPath()
-                    }, this));
+                    }, this, _homeViewModel.UpdateCurrentItemCommand));
+                    _pathBuilder.ParsePath(tempPath);
                 }
-            }
 
-            try
-            {
-                var subItems = await _itemService.GetSubItems(_pathBuilder.GetPath());
-
-                if (subItems != null)
+                try
                 {
-                    foreach (var subItem in subItems)
-                    {
-                        var itemControl = new ItemControl(subItem, this);
-                        if (subItem.IsDirectory)
-                        {
-                            itemControl.ContextMenu = new DirectoryContextMenu(_homeViewModel, itemControl);
-                        }
-                        else
-                        {
-                            itemControl.ContextMenu = new FileContextMenu(_homeViewModel, itemControl);
-                        }
+                    var subItems = await _itemService.GetSubItems(_pathBuilder.GetPath());
 
-                        itemControls.Add(itemControl);
+                    if (subItems != null)
+                    {
+                        foreach (var subItem in subItems)
+                        {
+                            var itemControl = new ItemControl(subItem, this, _homeViewModel.UpdateCurrentItemCommand);
+                            if (subItem.IsDirectory)
+                            {
+                                itemControl.ContextMenu = new DirectoryContextMenu(_homeViewModel, itemControl);
+                            }
+                            else
+                            {
+                                itemControl.ContextMenu = new FileContextMenu(_homeViewModel, itemControl);
+                            }
+
+                            itemControls.Add(itemControl);
+                        }
                     }
                 }
+                catch (Exception)
+                {
+                    _homeViewModel.MessageViewModel.Message = "Remote service is not available.";
+                }
+            }
 
-                _homeViewModel.ItemControls = itemControls;
-            }
-            catch (Exception)
-            {
-                _homeViewModel.MessageViewModel.Message = "Remote service is not available.";
-            }
+            _homeViewModel.ItemControls = itemControls;
         }
     }
 }

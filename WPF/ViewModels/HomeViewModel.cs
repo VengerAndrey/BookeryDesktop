@@ -13,8 +13,8 @@ namespace WPF.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        private Share _currentShare;
         private Item _currentItem;
+        private Share _currentShare;
         private List<ItemControl> _itemControls;
         private IEnumerable<Share> _shares;
 
@@ -25,13 +25,12 @@ namespace WPF.ViewModels
 
             LoadSharesCommand = new LoadSharesCommand(this, shareService);
             LoadItemsCommand = new LoadItemsCommand(this, itemService);
-            RefreshItemsCommand = new RefreshItemsCommand(this, itemService);
 
             DataInputCommand =
                 new DataInputCommand(this, shareService, itemService, accessService, () =>
                 {
                     LoadSharesCommand.Execute(null);
-                    RefreshItemsCommand.Execute(CurrentItem);
+                    LoadItemsCommand.Execute(CurrentItem.Path);
                 });
             CreateShareCommand = new CreateShareCommand(this);
             CreateDirectoryCommand = new CreateDirectoryCommand(this);
@@ -44,12 +43,14 @@ namespace WPF.ViewModels
                     LoadItemsCommand.Execute(null);
                 }
             });
-            DeleteItemCommand = new DeleteItemCommand(itemService, () => RefreshItemsCommand.Execute(CurrentItem));
+            DeleteItemCommand = new DeleteItemCommand(itemService, () => LoadItemsCommand.Execute(CurrentItem.Path));
 
             DownloadFileCommand = new DownloadFileCommand(itemService);
-            UploadFileCommand = new UploadCommand(itemService, () => RefreshItemsCommand.Execute(CurrentItem));
+            UploadFileCommand = new UploadCommand(itemService, () => LoadItemsCommand.Execute(CurrentItem.Path));
 
             AccessShareByIdCommand = new AccessShareByIdCommand(this);
+
+            UpdateCurrentItemCommand = new UpdateCurrentItemCommand(this);
 
             ListBoxItemsContextMenu = new ListBoxItemsContextMenu(this);
             ListBoxSharesContextMenu = new ListBoxSharesContextMenu(this);
@@ -65,14 +66,11 @@ namespace WPF.ViewModels
             }
         }
 
-        public Item ParentItem { get; set; }
-
         public Item CurrentItem
         {
             get => _currentItem;
             set
             {
-                ParentItem = _currentItem;
                 _currentItem = value;
                 ListBoxItemsContextMenu = new ListBoxItemsContextMenu(this);
                 OnCurrentItemChanged();
@@ -101,7 +99,6 @@ namespace WPF.ViewModels
 
         public ICommand LoadSharesCommand { get; }
         public ICommand LoadItemsCommand { get; }
-        public ICommand RefreshItemsCommand { get; }
 
         public ICommand DataInputCommand { get; }
         public ICommand CreateShareCommand { get; }
@@ -114,6 +111,8 @@ namespace WPF.ViewModels
         public ICommand UploadFileCommand { get; }
 
         public ICommand AccessShareByIdCommand { get; }
+
+        public ICommand UpdateCurrentItemCommand { get; }
 
         public ContextMenu ListBoxItemsContextMenu { get; private set; }
         public ContextMenu ListBoxSharesContextMenu { get; }

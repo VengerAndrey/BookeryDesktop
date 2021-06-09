@@ -3,7 +3,6 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Domain.Models;
 using WPF.Common;
-using WPF.ViewModels;
 
 namespace WPF.Controls
 {
@@ -13,12 +12,14 @@ namespace WPF.Controls
     public partial class ItemControl : UserControl
     {
         private readonly ICommand _loadItemsCommand;
+        private readonly ICommand _updateCurrentItemCommand;
 
-        public ItemControl(Item item, ICommand loadItemsCommand)
+        public ItemControl(Item item, ICommand loadItemsCommand, ICommand updateCurrentItemCommand)
         {
             Item = item;
             Image = ItemImageHelper.GetImage(item);
             _loadItemsCommand = loadItemsCommand;
+            _updateCurrentItemCommand = updateCurrentItemCommand;
             InitializeComponent();
         }
 
@@ -27,7 +28,8 @@ namespace WPF.Controls
 
         private void ItemControl_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _loadItemsCommand.Execute(Item);
+            _loadItemsCommand.Execute(Item.Path);
+            _updateCurrentItemCommand.Execute(Item);
         }
     }
 }
