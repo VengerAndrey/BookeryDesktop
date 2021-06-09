@@ -12,15 +12,13 @@ namespace WPF.Controls
     /// </summary>
     public partial class ItemControl : UserControl
     {
-        private readonly HomeViewModel _homeViewModel;
         private readonly ICommand _loadItemsCommand;
 
-        public ItemControl(Item item, ICommand loadItemsCommand, HomeViewModel homeViewModel)
+        public ItemControl(Item item, ICommand loadItemsCommand)
         {
             Item = item;
             Image = ItemImageHelper.GetImage(item);
             _loadItemsCommand = loadItemsCommand;
-            _homeViewModel = homeViewModel;
             InitializeComponent();
         }
 

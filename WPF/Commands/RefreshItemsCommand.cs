@@ -51,7 +51,7 @@ namespace WPF.Commands
                         IsDirectory = true,
                         Size = null,
                         Path = _pathBuilder.GetPath()
-                    }, _homeViewModel.LoadItemsCommand, _homeViewModel));
+                    }, _homeViewModel.LoadItemsCommand));
                 }
             }
 
@@ -63,7 +63,7 @@ namespace WPF.Commands
                 {
                     foreach (var subItem in subItems)
                     {
-                        var itemControl = new ItemControl(subItem, _homeViewModel.LoadItemsCommand, _homeViewModel);
+                        var itemControl = new ItemControl(subItem, _homeViewModel.LoadItemsCommand);
                         if (subItem.IsDirectory)
                         {
                             itemControl.ContextMenu = new DirectoryContextMenu(_homeViewModel, itemControl);
