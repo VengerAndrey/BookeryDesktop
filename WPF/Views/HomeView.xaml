@@ -24,7 +24,7 @@
             <ListBox Name="ListBoxShares" Grid.Row="1" BorderThickness="0"
                      ItemsSource="{Binding SharesViewModel.Shares}"
                      ContextMenu="{Binding SharesViewModel.ListBoxSharesContextMenu}"
-                     SelectedItem="{Binding SharesViewModel.CurrentShare}">
+                     SelectedItem="{Binding SharesViewModel.CurrentShare, Mode=OneWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"

@@ -12,21 +12,21 @@ namespace WPF.ViewModels
             MessageViewModel = new MessageViewModel();
             DataInputViewModel = new DataInputViewModel();
 
-            DataInputCommand =
-                new DataInputCommand(this, shareService, itemService, accessService, () =>
-                {
-                    SharesViewModel.LoadSharesCommand.Execute(null);
-                    ItemsViewModel.LoadItemsCommand.Execute(ItemsViewModel.CurrentItem.Path);
-                });
+            OpenDataInputCommand = new OpenDataInputCommand(DataInputViewModel);
 
-            ItemsViewModel = new ItemsViewModel(MessageViewModel, DataInputViewModel, itemService, DataInputCommand);
-            SharesViewModel = new SharesViewModel(MessageViewModel, DataInputViewModel, shareService,
-                ItemsViewModel.LoadItemsCommand);
+            ItemsViewModel =
+                new ItemsViewModel(MessageViewModel, DataInputViewModel, itemService, OpenDataInputCommand);
+            SharesViewModel = new SharesViewModel(MessageViewModel, DataInputViewModel, shareService, accessService,
+                ItemsViewModel.LoadItemsCommand, OpenDataInputCommand);
+
+            DataInputCommand = new UseDataInputValueCommand(DataInputViewModel, SharesViewModel.CreateShareCommand,
+                ItemsViewModel.CreateDirectoryCommand, SharesViewModel.AccessShareByIdCommand);
         }
 
         public SharesViewModel SharesViewModel { get; }
         public ItemsViewModel ItemsViewModel { get; }
 
+        public ICommand OpenDataInputCommand { get; }
         public ICommand DataInputCommand { get; }
 
         public MessageViewModel MessageViewModel { get; }

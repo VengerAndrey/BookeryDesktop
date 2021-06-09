@@ -1,29 +1,30 @@
 ﻿using System;
-using System.Windows.Input;
+using System.Threading.Tasks;
+using BookeryApi.Services.Storage;
 using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    internal class CreateDirectoryCommand : ICommand
+    internal class CreateDirectoryCommand : AsyncCommand
     {
+        private readonly Action _callback;
+        private readonly IItemService _itemService;
         private readonly ItemsViewModel _itemsViewModel;
 
-        public CreateDirectoryCommand(ItemsViewModel itemsViewModel)
+        public CreateDirectoryCommand(ItemsViewModel itemsViewModel, IItemService itemService, Action callback)
         {
             _itemsViewModel = itemsViewModel;
+            _itemService = itemService;
+            _callback = callback;
         }
 
-        public bool CanExecute(object parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
-            return true;
+            if (parameter is string name)
+            {
+                await _itemService.CreateDirectory(_itemsViewModel.CurrentItem.Path + "/" + name);
+                _callback();
+            }
         }
-
-        public void Execute(object parameter)
-        {
-            _itemsViewModel.DataInputViewModel.Show(DataInputType.DirectoryName);
-            _itemsViewModel.DataInputCommand.Execute(parameter);
-        }
-
-        public event EventHandler CanExecuteChanged;
     }
 }

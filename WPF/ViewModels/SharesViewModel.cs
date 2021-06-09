@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
 using BookeryApi.Services.Storage;
+using BookeryApi.Services.User;
 using Domain.Models;
 using WPF.Commands;
 using WPF.Common.ContextMenus;
@@ -14,24 +16,34 @@ namespace WPF.ViewModels
         private IEnumerable<Share> _shares;
 
         public SharesViewModel(MessageViewModel messageViewModel, DataInputViewModel dataInputViewModel,
-            IShareService shareService, ICommand loadItemsCommand)
+            IShareService shareService, IAccessService accessService, ICommand loadItemsCommand,
+            ICommand openDataInputCommand)
         {
             MessageViewModel = messageViewModel;
             DataInputViewModel = dataInputViewModel;
 
             LoadSharesCommand = loadItemsCommand;
+            OpenDataInputCommand = openDataInputCommand;
+
+            var callback = new Action(() =>
+            {
+                LoadSharesCommand.Execute(null);
+                DataInputViewModel.CancelCommand.Execute(null);
+            });
 
             LoadSharesCommand = new LoadSharesCommand(this, shareService);
-            CreateShareCommand = new CreateShareCommand(this);
+            CreateShareCommand = new CreateShareCommand(shareService, callback);
             DeleteShareCommand = new DeleteShareCommand(this, shareService, share =>
             {
                 LoadSharesCommand.Execute(null);
                 if (share?.Id == CurrentShare?.Id)
                 {
-                    LoadItemsCommand.Execute(null);
+                    loadItemsCommand.Execute(null);
                 }
+
+                OnPropertyChanged(nameof(CurrentShare));
             });
-            AccessShareByIdCommand = new AccessShareByIdCommand(this);
+            AccessShareByIdCommand = new AccessShareByIdCommand(accessService, this, callback);
             ListBoxSharesContextMenu = new ListBoxSharesContextMenu(this);
         }
 
@@ -63,7 +75,7 @@ namespace WPF.ViewModels
         public ICommand DeleteShareCommand { get; }
         public ICommand AccessShareByIdCommand { get; }
 
-        public ICommand LoadItemsCommand { get; }
+        public ICommand OpenDataInputCommand { get; }
 
         public ContextMenu ListBoxSharesContextMenu { get; }
     }

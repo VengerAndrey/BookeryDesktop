@@ -1,28 +1,27 @@
 ﻿using System;
-using System.Windows.Input;
-using WPF.ViewModels;
+using System.Threading.Tasks;
+using BookeryApi.Services.Storage;
 
 namespace WPF.Commands
 {
-    internal class CreateShareCommand : ICommand
+    internal class CreateShareCommand : AsyncCommand
     {
-        private readonly SharesViewModel _sharesViewModel;
+        private readonly Action _callback;
+        private readonly IShareService _shareService;
 
-        public CreateShareCommand(SharesViewModel sharesViewModel)
+        public CreateShareCommand(IShareService shareService, Action callback)
         {
-            _sharesViewModel = sharesViewModel;
+            _shareService = shareService;
+            _callback = callback;
         }
 
-        public bool CanExecute(object parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
-            return true;
+            if (parameter is string name)
+            {
+                await _shareService.Create(name);
+                _callback();
+            }
         }
-
-        public void Execute(object parameter)
-        {
-            _sharesViewModel.DataInputViewModel.Show(DataInputType.ShareName);
-        }
-
-        public event EventHandler CanExecuteChanged;
     }
 }

@@ -11,7 +11,8 @@ namespace WPF.Common.ContextMenus
             var createShare = new MenuItem
             {
                 Header = "Create",
-                Command = sharesViewModel.CreateShareCommand,
+                Command = sharesViewModel.OpenDataInputCommand,
+                CommandParameter = DataInputType.ShareName,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)
@@ -21,7 +22,8 @@ namespace WPF.Common.ContextMenus
             var accessShareById = new MenuItem
             {
                 Header = "Access by ID",
-                Command = sharesViewModel.AccessShareByIdCommand,
+                Command = sharesViewModel.OpenDataInputCommand,
+                CommandParameter = DataInputType.ShareId,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)

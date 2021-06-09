@@ -11,8 +11,8 @@ namespace WPF.Common.ContextMenus
             var createDirectory = new MenuItem
             {
                 Header = "Create directory",
-                Command = itemsViewModel.CreateDirectoryCommand,
-                CommandParameter = itemsViewModel.CurrentItem,
+                Command = itemsViewModel.OpenDataInputCommand,
+                CommandParameter = DataInputType.DirectoryName,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)

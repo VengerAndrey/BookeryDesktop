@@ -16,15 +16,21 @@ namespace WPF.ViewModels
         private List<ItemControl> _itemControls;
 
         public ItemsViewModel(MessageViewModel messageViewModel, DataInputViewModel dataInputViewModel,
-            IItemService itemService, ICommand dataInputCommand)
+            IItemService itemService, ICommand openDataInputCommand)
         {
             MessageViewModel = messageViewModel;
             DataInputViewModel = dataInputViewModel;
 
-            DataInputCommand = dataInputCommand;
+            OpenDataInputCommand = openDataInputCommand;
+
+            var callback = new Action(() =>
+            {
+                LoadItemsCommand.Execute(CurrentItem.Path);
+                DataInputViewModel.CancelCommand.Execute(null);
+            });
 
             LoadItemsCommand = new LoadItemsCommand(this, itemService);
-            CreateDirectoryCommand = new CreateDirectoryCommand(this);
+            CreateDirectoryCommand = new CreateDirectoryCommand(this, itemService, callback);
             DeleteItemCommand = new DeleteItemCommand(itemService, () => LoadItemsCommand.Execute(CurrentItem.Path));
             DownloadFileCommand = new DownloadFileCommand(itemService);
             UploadFileCommand = new UploadCommand(itemService, () => LoadItemsCommand.Execute(CurrentItem.Path));
@@ -64,7 +70,7 @@ namespace WPF.ViewModels
         public ICommand UploadFileCommand { get; }
         public ICommand UpdateCurrentItemCommand { get; }
 
-        public ICommand DataInputCommand { get; }
+        public ICommand OpenDataInputCommand { get; }
 
         public ContextMenu ListBoxItemsContextMenu { get; private set; }
 

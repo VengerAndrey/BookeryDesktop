@@ -27,13 +27,12 @@ namespace WPF.Commands
                 try
                 {
                     await _shareService.Delete(share.Id);
+                    _callback(share);
                 }
                 catch (ForbiddenException e)
                 {
                     _sharesViewModel.MessageViewModel.Message = e.Message;
                 }
-
-                _callback(share);
             }
         }
     }
