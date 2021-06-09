@@ -6,13 +6,13 @@ namespace WPF.Common.ContextMenus
 {
     internal class ListBoxItemsContextMenu : ContextMenu
     {
-        public ListBoxItemsContextMenu(HomeViewModel homeViewModel)
+        public ListBoxItemsContextMenu(ItemsViewModel itemsViewModel)
         {
             var createDirectory = new MenuItem
             {
                 Header = "Create directory",
-                Command = homeViewModel.CreateDirectoryCommand,
-                CommandParameter = homeViewModel.CurrentItem,
+                Command = itemsViewModel.CreateDirectoryCommand,
+                CommandParameter = itemsViewModel.CurrentItem,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)
@@ -22,8 +22,8 @@ namespace WPF.Common.ContextMenus
             var uploadFile = new MenuItem
             {
                 Header = "Upload",
-                Command = homeViewModel.UploadFileCommand,
-                CommandParameter = homeViewModel.CurrentItem,
+                Command = itemsViewModel.UploadFileCommand,
+                CommandParameter = itemsViewModel.CurrentItem,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Upload)

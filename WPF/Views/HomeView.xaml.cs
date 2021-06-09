@@ -36,9 +36,9 @@ namespace WPF.Views
                 Path = $"{share?.Id}/root"
             };
 
-            homeViewModel.CurrentItem = item;
-            homeViewModel.CurrentShare = share;
-            homeViewModel.LoadItemsCommand.Execute(item.Path);
+            homeViewModel.ItemsViewModel.CurrentItem = item;
+            homeViewModel.SharesViewModel.CurrentShare = share;
+            homeViewModel.ItemsViewModel.LoadItemsCommand.Execute(item.Path);
         }
 
         private void ShareBorder_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -53,7 +53,7 @@ namespace WPF.Views
             var contentPresenter = border?.Child as ContentPresenter;
             var share = contentPresenter?.Content as Share;
 
-            border.ContextMenu = new ShareContextMenu(homeViewModel, share);
+            border.ContextMenu = new ShareContextMenu(homeViewModel.SharesViewModel, share);
         }
 
         private void ListBoxItems_OnLoaded(object sender, RoutedEventArgs e)
@@ -64,9 +64,9 @@ namespace WPF.Views
                 return;
             }
 
-            homeViewModel.CurrentItemChanged += () =>
+            homeViewModel.ItemsViewModel.CurrentItemChanged += () =>
             {
-                ListBoxItems.ContextMenu = homeViewModel.ListBoxItemsContextMenu;
+                ListBoxItems.ContextMenu = homeViewModel.ItemsViewModel.ListBoxItemsContextMenu;
             };
         }
     }

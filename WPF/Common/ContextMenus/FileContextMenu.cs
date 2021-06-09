@@ -7,12 +7,12 @@ namespace WPF.Common.ContextMenus
 {
     internal class FileContextMenu : ContextMenu
     {
-        public FileContextMenu(HomeViewModel homeViewModel, ItemControl caller)
+        public FileContextMenu(ItemsViewModel itemsViewModel, ItemControl caller)
         {
             var downloadFile = new MenuItem
             {
                 Header = "Download",
-                Command = homeViewModel.DownloadFileCommand,
+                Command = itemsViewModel.DownloadFileCommand,
                 CommandParameter = caller,
                 Icon = new Image
                 {
@@ -23,7 +23,7 @@ namespace WPF.Common.ContextMenus
             var delete = new MenuItem
             {
                 Header = "Delete",
-                Command = homeViewModel.DeleteItemCommand,
+                Command = itemsViewModel.DeleteItemCommand,
                 CommandParameter = caller,
                 Icon = new Image
                 {

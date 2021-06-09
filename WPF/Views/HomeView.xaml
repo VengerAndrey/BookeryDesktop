@@ -21,9 +21,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Your courses" />
-            <ListBox Name="ListBoxShares" Grid.Row="1" BorderThickness="0" ItemsSource="{Binding Shares}"
-                     ContextMenu="{Binding ListBoxSharesContextMenu}"
-                     SelectedItem="{Binding CurrentShare}">
+            <ListBox Name="ListBoxShares" Grid.Row="1" BorderThickness="0"
+                     ItemsSource="{Binding SharesViewModel.Shares}"
+                     ContextMenu="{Binding SharesViewModel.ListBoxSharesContextMenu}"
+                     SelectedItem="{Binding SharesViewModel.CurrentShare}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
@@ -84,7 +85,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Margin="10" FontSize="18" Text="Course files" />
             <ListBox Name="ListBoxItems" Grid.Row="1" HorizontalContentAlignment="Stretch" BorderThickness="0"
-                     ItemsSource="{Binding ItemControls}" Loaded="ListBoxItems_OnLoaded">
+                     ItemsSource="{Binding ItemsViewModel.ItemControls}" Loaded="ListBoxItems_OnLoaded">
                 <ListBox.Style>
                     <Style TargetType="{x:Type ListBox}">
                         <Style.Triggers>

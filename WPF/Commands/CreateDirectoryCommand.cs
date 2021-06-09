@@ -1,22 +1,29 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Windows.Input;
 using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    internal class CreateDirectoryCommand : AsyncCommand
+    internal class CreateDirectoryCommand : ICommand
     {
-        private readonly HomeViewModel _homeViewModel;
+        private readonly ItemsViewModel _itemsViewModel;
 
-        public CreateDirectoryCommand(HomeViewModel homeViewModel)
+        public CreateDirectoryCommand(ItemsViewModel itemsViewModel)
         {
-            _homeViewModel = homeViewModel;
+            _itemsViewModel = itemsViewModel;
         }
 
-        public override Task ExecuteAsync(object parameter)
+        public bool CanExecute(object parameter)
         {
-            _homeViewModel.DataInputViewModel.Show(DataInputType.DirectoryName);
-            _homeViewModel.DataInputCommand.Execute(parameter);
-            return Task.CompletedTask;
+            return true;
         }
+
+        public void Execute(object parameter)
+        {
+            _itemsViewModel.DataInputViewModel.Show(DataInputType.DirectoryName);
+            _itemsViewModel.DataInputCommand.Execute(parameter);
+        }
+
+        public event EventHandler CanExecuteChanged;
     }
 }

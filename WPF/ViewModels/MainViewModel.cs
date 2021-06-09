@@ -27,7 +27,7 @@ namespace WPF.ViewModels
                 }
                 else
                 {
-                    homeViewModel?.LoadSharesCommand.Execute(null);
+                    homeViewModel?.SharesViewModel.LoadSharesCommand.Execute(null);
                 }
             };
 

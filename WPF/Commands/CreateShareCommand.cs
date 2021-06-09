@@ -1,21 +1,28 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Windows.Input;
 using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    internal class CreateShareCommand : AsyncCommand
+    internal class CreateShareCommand : ICommand
     {
-        private readonly HomeViewModel _homeViewModel;
+        private readonly SharesViewModel _sharesViewModel;
 
-        public CreateShareCommand(HomeViewModel homeViewModel)
+        public CreateShareCommand(SharesViewModel sharesViewModel)
         {
-            _homeViewModel = homeViewModel;
+            _sharesViewModel = sharesViewModel;
         }
 
-        public override Task ExecuteAsync(object parameter)
+        public bool CanExecute(object parameter)
         {
-            _homeViewModel.DataInputViewModel.Show(DataInputType.ShareName);
-            return Task.CompletedTask;
+            return true;
         }
+
+        public void Execute(object parameter)
+        {
+            _sharesViewModel.DataInputViewModel.Show(DataInputType.ShareName);
+        }
+
+        public event EventHandler CanExecuteChanged;
     }
 }

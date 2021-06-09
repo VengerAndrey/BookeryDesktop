@@ -6,12 +6,12 @@ namespace WPF.Common.ContextMenus
 {
     internal class ListBoxSharesContextMenu : ContextMenu
     {
-        public ListBoxSharesContextMenu(HomeViewModel homeViewModel)
+        public ListBoxSharesContextMenu(SharesViewModel sharesViewModel)
         {
             var createShare = new MenuItem
             {
                 Header = "Create",
-                Command = homeViewModel.CreateShareCommand,
+                Command = sharesViewModel.CreateShareCommand,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)
@@ -21,7 +21,7 @@ namespace WPF.Common.ContextMenus
             var accessShareById = new MenuItem
             {
                 Header = "Access by ID",
-                Command = homeViewModel.AccessShareByIdCommand,
+                Command = sharesViewModel.AccessShareByIdCommand,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)

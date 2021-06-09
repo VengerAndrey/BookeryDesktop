@@ -7,12 +7,12 @@ namespace WPF.Common.ContextMenus
 {
     internal class ShareContextMenu : ContextMenu
     {
-        public ShareContextMenu(HomeViewModel homeViewModel, Share caller)
+        public ShareContextMenu(SharesViewModel sharesViewModel, Share caller)
         {
             var deleteDirectory = new MenuItem
             {
                 Header = "Delete",
-                Command = homeViewModel.DeleteShareCommand,
+                Command = sharesViewModel.DeleteShareCommand,
                 CommandParameter = caller,
                 Icon = new Image
                 {

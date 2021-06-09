@@ -7,11 +7,11 @@ namespace WPF.Commands
 {
     internal class UpdateCurrentItemCommand : ICommand
     {
-        private readonly HomeViewModel _homeViewModel;
+        private readonly ItemsViewModel _itemsViewModel;
 
-        public UpdateCurrentItemCommand(HomeViewModel homeViewModel)
+        public UpdateCurrentItemCommand(ItemsViewModel itemsViewModel)
         {
-            _homeViewModel = homeViewModel;
+            _itemsViewModel = itemsViewModel;
         }
 
         public bool CanExecute(object parameter)
@@ -23,7 +23,7 @@ namespace WPF.Commands
         {
             if (parameter is Item item)
             {
-                _homeViewModel.CurrentItem = item;
+                _itemsViewModel.CurrentItem = item;
             }
         }
 

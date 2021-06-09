@@ -7,12 +7,12 @@ namespace WPF.Commands
 {
     internal class LoadSharesCommand : AsyncCommand
     {
-        private readonly HomeViewModel _homeViewModel;
         private readonly IShareService _shareService;
+        private readonly SharesViewModel _sharesViewModel;
 
-        public LoadSharesCommand(HomeViewModel homeViewModel, IShareService shareService)
+        public LoadSharesCommand(SharesViewModel sharesViewModel, IShareService shareService)
         {
-            _homeViewModel = homeViewModel;
+            _sharesViewModel = sharesViewModel;
             _shareService = shareService;
         }
 
@@ -20,11 +20,11 @@ namespace WPF.Commands
         {
             try
             {
-                _homeViewModel.Shares = await _shareService.GetAll();
+                _sharesViewModel.Shares = await _shareService.GetAll();
             }
             catch (Exception)
             {
-                _homeViewModel.MessageViewModel.Message = "Remote service is not available.";
+                _sharesViewModel.MessageViewModel.Message = "Remote service is not available.";
             }
         }
     }

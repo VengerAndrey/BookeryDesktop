@@ -7,12 +7,12 @@ namespace WPF.Common.ContextMenus
 {
     internal class DirectoryContextMenu : ContextMenu
     {
-        public DirectoryContextMenu(HomeViewModel homeViewModel, ItemControl caller)
+        public DirectoryContextMenu(ItemsViewModel itemsViewModel, ItemControl caller)
         {
             var deleteDirectory = new MenuItem
             {
                 Header = "Delete",
-                Command = homeViewModel.DeleteItemCommand,
+                Command = itemsViewModel.DeleteItemCommand,
                 CommandParameter = caller,
                 Icon = new Image
                 {

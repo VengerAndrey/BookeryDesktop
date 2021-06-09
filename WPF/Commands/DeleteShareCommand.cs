@@ -10,12 +10,12 @@ namespace WPF.Commands
     internal class DeleteShareCommand : AsyncCommand
     {
         private readonly Action<Share> _callback;
-        private readonly HomeViewModel _homeViewModel;
         private readonly IShareService _shareService;
+        private readonly SharesViewModel _sharesViewModel;
 
-        public DeleteShareCommand(HomeViewModel homeViewModel, IShareService shareService, Action<Share> callback)
+        public DeleteShareCommand(SharesViewModel sharesViewModel, IShareService shareService, Action<Share> callback)
         {
-            _homeViewModel = homeViewModel;
+            _sharesViewModel = sharesViewModel;
             _shareService = shareService;
             _callback = callback;
         }
@@ -30,7 +30,7 @@ namespace WPF.Commands
                 }
                 catch (ForbiddenException e)
                 {
-                    _homeViewModel.MessageViewModel.Message = e.Message;
+                    _sharesViewModel.MessageViewModel.Message = e.Message;
                 }
 
                 _callback(share);

@@ -12,13 +12,13 @@ namespace WPF.Commands
 {
     internal class LoadItemsCommand : AsyncCommand
     {
-        private readonly HomeViewModel _homeViewModel;
         private readonly IItemService _itemService;
+        private readonly ItemsViewModel _itemsViewModel;
         private readonly PathBuilder _pathBuilder;
 
-        public LoadItemsCommand(HomeViewModel homeViewModel, IItemService itemService)
+        public LoadItemsCommand(ItemsViewModel itemsViewModel, IItemService itemService)
         {
-            _homeViewModel = homeViewModel;
+            _itemsViewModel = itemsViewModel;
             _itemService = itemService;
             _pathBuilder = new PathBuilder();
         }
@@ -46,7 +46,7 @@ namespace WPF.Commands
                         IsDirectory = true,
                         Size = null,
                         Path = _pathBuilder.GetPath()
-                    }, this, _homeViewModel.UpdateCurrentItemCommand));
+                    }, this, _itemsViewModel.UpdateCurrentItemCommand));
                     _pathBuilder.ParsePath(tempPath);
                 }
 
@@ -58,14 +58,14 @@ namespace WPF.Commands
                     {
                         foreach (var subItem in subItems)
                         {
-                            var itemControl = new ItemControl(subItem, this, _homeViewModel.UpdateCurrentItemCommand);
+                            var itemControl = new ItemControl(subItem, this, _itemsViewModel.UpdateCurrentItemCommand);
                             if (subItem.IsDirectory)
                             {
-                                itemControl.ContextMenu = new DirectoryContextMenu(_homeViewModel, itemControl);
+                                itemControl.ContextMenu = new DirectoryContextMenu(_itemsViewModel, itemControl);
                             }
                             else
                             {
-                                itemControl.ContextMenu = new FileContextMenu(_homeViewModel, itemControl);
+                                itemControl.ContextMenu = new FileContextMenu(_itemsViewModel, itemControl);
                             }
 
                             itemControls.Add(itemControl);
@@ -74,11 +74,11 @@ namespace WPF.Commands
                 }
                 catch (Exception)
                 {
-                    _homeViewModel.MessageViewModel.Message = "Remote service is not available.";
+                    _itemsViewModel.MessageViewModel.Message = "Remote service is not available.";
                 }
             }
 
-            _homeViewModel.ItemControls = itemControls;
+            _itemsViewModel.ItemControls = itemControls;
         }
     }
 }
