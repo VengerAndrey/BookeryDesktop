@@ -12,14 +12,17 @@ namespace WPF.Controls
     public partial class ItemControl : UserControl
     {
         private readonly ICommand _loadItemsCommand;
+        private readonly ICommand _openFileCommand;
         private readonly ICommand _updateCurrentItemCommand;
 
-        public ItemControl(Item item, ICommand loadItemsCommand, ICommand updateCurrentItemCommand)
+        public ItemControl(Item item, ICommand loadItemsCommand, ICommand updateCurrentItemCommand,
+            ICommand openFileCommand)
         {
             Item = item;
             Image = ItemImageHelper.GetImage(item);
             _loadItemsCommand = loadItemsCommand;
             _updateCurrentItemCommand = updateCurrentItemCommand;
+            _openFileCommand = openFileCommand;
             InitializeComponent();
         }
 
@@ -28,8 +31,15 @@ namespace WPF.Controls
 
         private void ItemControl_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _loadItemsCommand.Execute(Item.Path);
-            _updateCurrentItemCommand.Execute(Item);
+            if (Item.IsDirectory)
+            {
+                _loadItemsCommand.Execute(Item.Path);
+                _updateCurrentItemCommand.Execute(Item);
+            }
+            else
+            {
+                _openFileCommand.Execute(Item);
+            }
         }
     }
 }

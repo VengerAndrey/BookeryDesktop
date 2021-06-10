@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using BookeryApi.Services.Storage;
-using WPF.Controls;
+using Domain.Models;
 
 namespace WPF.Commands
 {
@@ -19,23 +19,18 @@ namespace WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
-            var itemControl = parameter as ItemControl;
-            if (itemControl is null)
+            if (parameter is Item item)
             {
-                return;
-            }
+                var response = await _itemService.Delete(item.Path);
 
-            var item = itemControl.Item;
-
-            var response = await _itemService.Delete(item.Path);
-
-            if (response)
-            {
-                _callback();
-            }
-            else
-            {
-                MessageBox.Show($"Can't delete {item.Name}.");
+                if (response)
+                {
+                    _callback();
+                }
+                else
+                {
+                    MessageBox.Show($"Can't delete {item.Name}.");
+                }
             }
         }
     }

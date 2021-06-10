@@ -41,12 +41,13 @@ namespace WPF.Commands
                     var tempPath = _pathBuilder.GetPath();
                     _pathBuilder.GetLastNode();
                     itemControls.Add(new ItemControl(new Item
-                    {
-                        Name = "[..]",
-                        IsDirectory = true,
-                        Size = null,
-                        Path = _pathBuilder.GetPath()
-                    }, this, _itemsViewModel.UpdateCurrentItemCommand));
+                        {
+                            Name = "[..]",
+                            IsDirectory = true,
+                            Size = null,
+                            Path = _pathBuilder.GetPath()
+                        }, this, _itemsViewModel.UpdateCurrentItemCommand,
+                        _itemsViewModel.OpenFileCommand));
                     _pathBuilder.ParsePath(tempPath);
                 }
 
@@ -58,7 +59,8 @@ namespace WPF.Commands
                     {
                         foreach (var subItem in subItems)
                         {
-                            var itemControl = new ItemControl(subItem, this, _itemsViewModel.UpdateCurrentItemCommand);
+                            var itemControl = new ItemControl(subItem, this, _itemsViewModel.UpdateCurrentItemCommand,
+                                _itemsViewModel.OpenFileCommand);
                             if (subItem.IsDirectory)
                             {
                                 itemControl.ContextMenu = new DirectoryContextMenu(_itemsViewModel, itemControl);

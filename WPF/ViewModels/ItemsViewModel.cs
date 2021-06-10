@@ -33,7 +33,8 @@ namespace WPF.ViewModels
             CreateDirectoryCommand = new CreateDirectoryCommand(this, itemService, callback);
             DeleteItemCommand = new DeleteItemCommand(itemService, () => LoadItemsCommand.Execute(CurrentItem.Path));
             DownloadFileCommand = new DownloadFileCommand(itemService);
-            UploadFileCommand = new UploadCommand(itemService, () => LoadItemsCommand.Execute(CurrentItem.Path));
+            UploadFileCommand = new UploadFileCommand(itemService, () => LoadItemsCommand.Execute(CurrentItem.Path));
+            OpenFileCommand = new OpenFileCommand(itemService);
             UpdateCurrentItemCommand = new UpdateCurrentItemCommand(this);
 
             ListBoxItemsContextMenu = new ListBoxItemsContextMenu(this);
@@ -68,6 +69,7 @@ namespace WPF.ViewModels
         public ICommand DeleteItemCommand { get; }
         public ICommand DownloadFileCommand { get; }
         public ICommand UploadFileCommand { get; }
+        public ICommand OpenFileCommand { get; }
         public ICommand UpdateCurrentItemCommand { get; }
 
         public ICommand OpenDataInputCommand { get; }

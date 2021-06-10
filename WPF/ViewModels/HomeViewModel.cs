@@ -35,7 +35,10 @@ namespace WPF.ViewModels
         public void Reset()
         {
             SharesViewModel.Shares = null;
-            ItemsViewModel.ItemControls.Clear();
+            if (ItemsViewModel.ItemControls != null && ItemsViewModel.ItemControls.Count > 0)
+            {
+                ItemsViewModel.ItemControls.Clear();
+            }
         }
     }
 }

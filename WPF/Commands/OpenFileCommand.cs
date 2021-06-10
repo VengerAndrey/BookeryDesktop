@@ -1,16 +1,17 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using BookeryApi.Services.Storage;
 using Domain.Models;
-using Microsoft.Win32;
 
 namespace WPF.Commands
 {
-    internal class DownloadFileCommand : AsyncCommand
+    internal class OpenFileCommand : AsyncCommand
     {
         private readonly IItemService _itemService;
 
-        public DownloadFileCommand(IItemService itemService)
+        public OpenFileCommand(IItemService itemService)
         {
             _itemService = itemService;
         }
@@ -32,15 +33,17 @@ namespace WPF.Commands
                     bytes = memoryStream.ToArray();
                 }
 
-                var extension = Path.GetExtension(item.Path);
-                var saveFileDialog = new SaveFileDialog();
-                saveFileDialog.FileName = item.Name;
-                saveFileDialog.DefaultExt = extension ?? "";
-                saveFileDialog.Filter = "File|*" + (extension ?? "*") + "|All files|*.*";
-                if (saveFileDialog.ShowDialog() == true)
+                var path = Path.Combine(Environment.CurrentDirectory, "temp", item.Name);
+
+                await File.WriteAllBytesAsync(path, bytes);
+
+                new Process
                 {
-                    await File.WriteAllBytesAsync(saveFileDialog.FileName, bytes);
-                }
+                    StartInfo = new ProcessStartInfo(path)
+                    {
+                        UseShellExecute = true
+                    }
+                }.Start();
             }
         }
     }

@@ -9,11 +9,11 @@ namespace WPF.Common.ContextMenus
     {
         public FileContextMenu(ItemsViewModel itemsViewModel, ItemControl caller)
         {
-            var downloadFile = new MenuItem
+            var download = new MenuItem
             {
                 Header = "Download",
                 Command = itemsViewModel.DownloadFileCommand,
-                CommandParameter = caller,
+                CommandParameter = caller.Item,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Download)
@@ -24,7 +24,7 @@ namespace WPF.Common.ContextMenus
             {
                 Header = "Delete",
                 Command = itemsViewModel.DeleteItemCommand,
-                CommandParameter = caller,
+                CommandParameter = caller.Item,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Delete)
@@ -32,7 +32,7 @@ namespace WPF.Common.ContextMenus
                 Style = Application.Current.FindResource("StyleContextMenuItem") as Style
             };
 
-            Items.Add(downloadFile);
+            Items.Add(download);
             Items.Add(delete);
 
             Style = Application.Current.FindResource("StyleContextMenu") as Style;

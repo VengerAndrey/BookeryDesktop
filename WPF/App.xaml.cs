@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WPF.Common;
 using WPF.HostBuilders;
 using WPF.State.Authentication;
 
@@ -12,6 +13,7 @@ namespace WPF
     public partial class App : Application
     {
         private readonly IHost _host;
+        private readonly TempDataSupervisor _tempDataSupervisor;
 
         public App()
         {
@@ -22,11 +24,13 @@ namespace WPF
                 .AddViewModels()
                 .AddViews()
                 .Build();
+            _tempDataSupervisor = new TempDataSupervisor();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             _host.Start();
+            _tempDataSupervisor.Start();
 
             Window window = _host.Services.GetRequiredService<MainWindow>();
             window.Show();
@@ -41,6 +45,7 @@ namespace WPF
 
             await _host.StopAsync();
             _host.Dispose();
+            _tempDataSupervisor.Dispose();
 
             base.OnExit(e);
         }
