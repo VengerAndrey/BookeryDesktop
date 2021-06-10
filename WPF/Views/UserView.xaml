@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -21,7 +22,8 @@
                    HorizontalAlignment="Center" DataContext="{Binding MessageViewModel}"
                    Text="{Binding Message}"
                    Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <Grid Grid.Row="2" Margin="10">
+        <Image Grid.Row="2" Source="{Binding Image}" Height="100" Width="100" />
+        <Grid Grid.Row="3" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90" />
                 <ColumnDefinition Width="200" />
@@ -30,7 +32,7 @@
             <TextBox Grid.Column="1" FontSize="16" Text="{Binding User.Email}"
                      IsReadOnly="True" Cursor="Arrow" />
         </Grid>
-        <Grid Grid.Row="3" Margin="10">
+        <Grid Grid.Row="4" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90" />
                 <ColumnDefinition Width="200" />
@@ -39,6 +41,6 @@
             <TextBox Grid.Column="1" FontSize="16" Text="{Binding User.Username}"
                      IsReadOnly="True" Cursor="Arrow" />
         </Grid>
-        <Button Grid.Row="4" Margin="5" FontSize="16" Content="Log out" Command="{Binding LogoutCommand}" />
+        <Button Grid.Row="5" Margin="5" FontSize="16" Content="Log out" Command="{Binding LogoutCommand}" />
     </Grid>
 </UserControl>

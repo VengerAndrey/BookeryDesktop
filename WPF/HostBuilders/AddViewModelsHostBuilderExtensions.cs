@@ -27,7 +27,8 @@ namespace WPF.HostBuilders
                 services.AddSingleton<CreateViewModel<UserViewModel>>(serviceProvider => () => new UserViewModel(
                     serviceProvider.GetRequiredService<IAuthenticator>(),
                     serviceProvider.GetRequiredService<ViewModelRenavigator<LoginViewModel>>(),
-                    serviceProvider.GetRequiredService<IUserService>()));
+                    serviceProvider.GetRequiredService<IUserService>(),
+                    serviceProvider.GetRequiredService<IPhotoService>()));
 
                 services.AddSingleton<IViewModelFactory, ViewModelFactory>();
 

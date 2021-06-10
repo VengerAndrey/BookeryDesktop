@@ -7,15 +7,15 @@ namespace WPF.ViewModels.Factories
     {
         private readonly CreateViewModel<HomeViewModel> _createHomeViewModel;
         private readonly CreateViewModel<LoginViewModel> _createLoginViewModel;
-        private readonly CreateViewModel<UserViewModel> _createMockViewModel;
+        private readonly CreateViewModel<UserViewModel> _createUserViewModel;
 
         public ViewModelFactory(CreateViewModel<LoginViewModel> createLoginViewModel,
             CreateViewModel<HomeViewModel> createHomeViewModel,
-            CreateViewModel<UserViewModel> createMockViewModel)
+            CreateViewModel<UserViewModel> createUserViewModel)
         {
             _createLoginViewModel = createLoginViewModel;
             _createHomeViewModel = createHomeViewModel;
-            _createMockViewModel = createMockViewModel;
+            _createUserViewModel = createUserViewModel;
         }
 
         public BaseViewModel CreateViewModel(ViewType viewType)
@@ -27,7 +27,7 @@ namespace WPF.ViewModels.Factories
                 case ViewType.Home:
                     return _createHomeViewModel();
                 case ViewType.User:
-                    return _createMockViewModel();
+                    return _createUserViewModel();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(viewType), viewType, null);
             }

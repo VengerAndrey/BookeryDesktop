@@ -16,19 +16,21 @@ namespace WPF.State.Authentication
         private readonly IShareService _shareService;
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
+        private readonly IPhotoService _photoService;
 
         private AuthenticationResponse _currentAuthenticationResponse;
 
         private Timer _timer;
 
         public Authenticator(ITokenService tokenService, IShareService shareService, IItemService itemService,
-            IUserService userService, IAccessService accessService)
+            IUserService userService, IAccessService accessService, IPhotoService photoService)
         {
             _tokenService = tokenService;
             _shareService = shareService;
             _itemService = itemService;
             _userService = userService;
             _accessService = accessService;
+            _photoService = photoService;
         }
 
         public bool IsLoggedIn => _currentAuthenticationResponse != null;
@@ -69,6 +71,7 @@ namespace WPF.State.Authentication
             _shareService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
             _userService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
             _accessService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
+            _photoService.SetBearerToken(_currentAuthenticationResponse.AccessToken);
         }
     }
 }
