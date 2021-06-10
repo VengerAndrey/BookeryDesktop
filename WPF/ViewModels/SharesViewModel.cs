@@ -44,6 +44,7 @@ namespace WPF.ViewModels
                 OnPropertyChanged(nameof(CurrentShare));
             });
             AccessShareByIdCommand = new AccessShareByIdCommand(accessService, this, callback);
+            CopyShareIdCommand = new CopyShareIdCommand();
             ListBoxSharesContextMenu = new ListBoxSharesContextMenu(this);
         }
 
@@ -74,6 +75,7 @@ namespace WPF.ViewModels
         public ICommand CreateShareCommand { get; }
         public ICommand DeleteShareCommand { get; }
         public ICommand AccessShareByIdCommand { get; }
+        public ICommand CopyShareIdCommand { get; }
 
         public ICommand OpenDataInputCommand { get; }
 
