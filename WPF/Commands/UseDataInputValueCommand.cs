@@ -6,19 +6,20 @@ namespace WPF.Commands
 {
     internal class UseDataInputValueCommand : ICommand
     {
-        private readonly ICommand _accessShareByIdCommand;
-        private readonly ICommand _createDirectoryCommand;
-
         private readonly ICommand _createShareCommand;
+        private readonly ICommand _createDirectoryCommand;
+        private readonly ICommand _accessShareByIdCommand;
+        private readonly ICommand _renameShareCommand;
         private readonly DataInputViewModel _dataInputViewModel;
 
         public UseDataInputValueCommand(DataInputViewModel dataInputViewModel, ICommand createShareCommand,
-            ICommand createDirectoryCommand, ICommand accessShareByIdCommand)
+            ICommand createDirectoryCommand, ICommand accessShareByIdCommand, ICommand renameShareCommand)
         {
             _dataInputViewModel = dataInputViewModel;
             _createShareCommand = createShareCommand;
             _createDirectoryCommand = createDirectoryCommand;
             _accessShareByIdCommand = accessShareByIdCommand;
+            _renameShareCommand = renameShareCommand;
         }
 
         public bool CanExecute(object parameter)
@@ -30,14 +31,17 @@ namespace WPF.Commands
         {
             switch (_dataInputViewModel.DataInputType)
             {
-                case DataInputType.ShareName:
+                case DataInputType.CreateShare:
                     _createShareCommand.Execute(parameter);
                     break;
-                case DataInputType.DirectoryName:
+                case DataInputType.CreateDirectory:
                     _createDirectoryCommand.Execute(parameter);
                     break;
-                case DataInputType.ShareId:
+                case DataInputType.AccessShareById:
                     _accessShareByIdCommand.Execute(parameter);
+                    break;
+                case DataInputType.RenameShare:
+                    _renameShareCommand.Execute(parameter);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

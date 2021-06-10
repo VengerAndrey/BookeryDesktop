@@ -22,6 +22,10 @@ namespace WPF.Common
         Download,
         Upload,
         CreateDirectory,
-        Delete
+        Delete,
+        Rename,
+        Add,
+        Link,
+        Share
     }
 }

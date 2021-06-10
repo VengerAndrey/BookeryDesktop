@@ -12,10 +12,10 @@ namespace WPF.Common.ContextMenus
             {
                 Header = "Create",
                 Command = sharesViewModel.OpenDataInputCommand,
-                CommandParameter = DataInputType.ShareName,
+                CommandParameter = DataInputType.CreateShare,
                 Icon = new Image
                 {
-                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)
+                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Add)
                 },
                 Style = Application.Current.FindResource("StyleContextMenuItem") as Style
             };
@@ -23,10 +23,10 @@ namespace WPF.Common.ContextMenus
             {
                 Header = "Access by ID",
                 Command = sharesViewModel.OpenDataInputCommand,
-                CommandParameter = DataInputType.ShareId,
+                CommandParameter = DataInputType.AccessShareById,
                 Icon = new Image
                 {
-                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)
+                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Link)
                 },
                 Style = Application.Current.FindResource("StyleContextMenuItem") as Style
             };

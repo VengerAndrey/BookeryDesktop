@@ -13,6 +13,7 @@ namespace WPF.ViewModels
     public class SharesViewModel : BaseViewModel
     {
         private Share _currentShare;
+        private Share _contextMenuShare;
         private IEnumerable<Share> _shares;
 
         public SharesViewModel(MessageViewModel messageViewModel, DataInputViewModel dataInputViewModel,
@@ -45,6 +46,7 @@ namespace WPF.ViewModels
             });
             AccessShareByIdCommand = new AccessShareByIdCommand(accessService, this, callback);
             CopyShareIdCommand = new CopyShareIdCommand();
+            RenameShareCommand = new RenameShareCommand(this, shareService, callback);
             ListBoxSharesContextMenu = new ListBoxSharesContextMenu(this);
         }
 
@@ -58,6 +60,16 @@ namespace WPF.ViewModels
             {
                 _currentShare = value;
                 OnPropertyChanged(nameof(CurrentShare));
+            }
+        }
+
+        public Share ContextMenuShare
+        {
+            get => _contextMenuShare;
+            set
+            {
+                _contextMenuShare = value;
+                OnPropertyChanged(nameof(ContextMenuShare));
             }
         }
 
@@ -76,6 +88,7 @@ namespace WPF.ViewModels
         public ICommand DeleteShareCommand { get; }
         public ICommand AccessShareByIdCommand { get; }
         public ICommand CopyShareIdCommand { get; }
+        public ICommand RenameShareCommand { get; }
 
         public ICommand OpenDataInputCommand { get; }
 

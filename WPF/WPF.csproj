@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <None Remove="HostBuilders\AddStoresHostBuilderExtensions.cs~RF97c4c8.TMP" />
+    <None Remove="Resources\ContextMenuIcons\add.png" />
     <None Remove="Resources\ContextMenuIcons\createdirectory.png" />
     <None Remove="Resources\ContextMenuIcons\delete.png" />
     <None Remove="Resources\ContextMenuIcons\download.png" />
+    <None Remove="Resources\ContextMenuIcons\link.png" />
+    <None Remove="Resources\ContextMenuIcons\rename.png" />
+    <None Remove="Resources\ContextMenuIcons\share.png" />
     <None Remove="Resources\ContextMenuIcons\upload.png" />
     <None Remove="Resources\folder.png" />
     <None Remove="Resources\ItemImages\doc.png" />
@@ -41,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\ContextMenuIcons\add.png" />
     <Resource Include="Resources\ContextMenuIcons\createdirectory.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -50,6 +55,9 @@
     <Resource Include="Resources\ContextMenuIcons\download.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\ContextMenuIcons\link.png" />
+    <Resource Include="Resources\ContextMenuIcons\rename.png" />
+    <Resource Include="Resources\ContextMenuIcons\share.png" />
     <Resource Include="Resources\ContextMenuIcons\upload.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

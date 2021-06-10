@@ -12,7 +12,7 @@ namespace WPF.Common.ContextMenus
             {
                 Header = "Create directory",
                 Command = itemsViewModel.OpenDataInputCommand,
-                CommandParameter = DataInputType.DirectoryName,
+                CommandParameter = DataInputType.CreateDirectory,
                 Icon = new Image
                 {
                     Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)

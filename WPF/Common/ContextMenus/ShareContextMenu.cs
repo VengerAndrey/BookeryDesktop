@@ -20,6 +20,17 @@ namespace WPF.Common.ContextMenus
                 },
                 Style = Application.Current.FindResource("StyleContextMenuItem") as Style
             };
+            var renameShare = new MenuItem
+            {
+                Header = "Rename",
+                Command = sharesViewModel.OpenDataInputCommand,
+                CommandParameter = DataInputType.RenameShare,
+                Icon = new Image
+                {
+                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Rename)
+                },
+                Style = Application.Current.FindResource("StyleContextMenuItem") as Style
+            };
             var copyShareId = new MenuItem
             {
                 Header = "Copy ID",
@@ -27,12 +38,13 @@ namespace WPF.Common.ContextMenus
                 CommandParameter = caller,
                 Icon = new Image
                 {
-                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.CreateDirectory)
+                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Share)
                 },
                 Style = Application.Current.FindResource("StyleContextMenuItem") as Style
             };
 
             Items.Add(deleteShare);
+            Items.Add(renameShare);
             Items.Add(copyShareId);
 
             Style = Application.Current.FindResource("StyleContextMenu") as Style;

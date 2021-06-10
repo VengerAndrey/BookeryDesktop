@@ -47,13 +47,14 @@ namespace WPF.ViewModels
             DataInputType = dataInputType;
             switch (dataInputType)
             {
-                case DataInputType.ShareName:
+                case DataInputType.CreateShare:
+                case DataInputType.RenameShare:
                     Name = "Enter course name:";
                     break;
-                case DataInputType.DirectoryName:
+                case DataInputType.CreateDirectory:
                     Name = "Enter directory name:";
                     break;
-                case DataInputType.ShareId:
+                case DataInputType.AccessShareById:
                     Name = "Enter course id:";
                     break;
                 default:
@@ -64,8 +65,9 @@ namespace WPF.ViewModels
 
     public enum DataInputType
     {
-        ShareName,
-        DirectoryName,
-        ShareId
+        CreateShare,
+        CreateDirectory,
+        AccessShareById,
+        RenameShare
     }
 }

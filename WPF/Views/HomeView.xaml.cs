@@ -53,6 +53,8 @@ namespace WPF.Views
             var contentPresenter = border?.Child as ContentPresenter;
             var share = contentPresenter?.Content as Share;
 
+            homeViewModel.SharesViewModel.ContextMenuShare = share;
+
             border.ContextMenu = new ShareContextMenu(homeViewModel.SharesViewModel, share);
         }
 
