@@ -19,7 +19,9 @@
     <None Remove="Resources\ItemImages\pdf.png" />
     <None Remove="Resources\ItemImages\png.png" />
     <None Remove="Resources\ItemImages\ppt.png" />
+    <None Remove="Resources\ItemImages\pptx.png" />
     <None Remove="Resources\ItemImages\txt.png" />
+    <None Remove="Resources\ItemImages\unknown.png" />
     <None Remove="Resources\ItemImages\xls.png" />
     <None Remove="Resources\ItemImages\xlsx.png" />
     <None Remove="Resources\ItemImages\zip.png" />
@@ -59,8 +61,10 @@
     <Resource Include="Resources\ItemImages\mp3.png" />
     <Resource Include="Resources\ItemImages\pdf.png" />
     <Resource Include="Resources\ItemImages\png.png" />
+    <Resource Include="Resources\ItemImages\pptx.png" />
     <Resource Include="Resources\ItemImages\ppt.png" />
     <Resource Include="Resources\ItemImages\txt.png" />
+    <Resource Include="Resources\ItemImages\unknown.png" />
     <Resource Include="Resources\ItemImages\xlsx.png" />
     <Resource Include="Resources\ItemImages\xls.png" />
     <Resource Include="Resources\ItemImages\zip.png" />

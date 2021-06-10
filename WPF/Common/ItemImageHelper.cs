@@ -17,12 +17,34 @@ namespace WPF.Common
             else
             {
                 var fileExtension = item.Path.Substring(item.Path.LastIndexOf(".") + 1);
-                bitmapImage.UriSource = new Uri($"../Resources/ItemImages/{fileExtension}.png", UriKind.Relative);
+                if (Enum.TryParse(typeof(FileExtension), fileExtension, true, out var res))
+                {
+                    bitmapImage.UriSource = new Uri($"../Resources/ItemImages/{fileExtension}.png", UriKind.Relative);
+                }
+                else
+                {
+                    bitmapImage.UriSource = new Uri("../Resources/ItemImages/unknown.png", UriKind.Relative);
+                }
             }
 
             bitmapImage.EndInit();
 
             return bitmapImage;
+        }
+
+        private enum FileExtension
+        {
+            Doc,
+            Docx,
+            Mp3,
+            Pdf,
+            Png,
+            Ppt,
+            Pptx,
+            Txt,
+            Xls,
+            Xlsx,
+            Zip
         }
     }
 }
