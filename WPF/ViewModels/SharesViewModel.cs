@@ -12,8 +12,8 @@ namespace WPF.ViewModels
 {
     public class SharesViewModel : BaseViewModel
     {
-        private Share _currentShare;
         private Share _contextMenuShare;
+        private Share _currentShare;
         private IEnumerable<Share> _shares;
 
         public SharesViewModel(MessageViewModel messageViewModel, DataInputViewModel dataInputViewModel,

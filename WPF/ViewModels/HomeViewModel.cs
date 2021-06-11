@@ -20,7 +20,8 @@ namespace WPF.ViewModels
                 ItemsViewModel.LoadItemsCommand, OpenDataInputCommand);
 
             DataInputCommand = new UseDataInputValueCommand(DataInputViewModel, SharesViewModel.CreateShareCommand,
-                ItemsViewModel.CreateDirectoryCommand, SharesViewModel.AccessShareByIdCommand, SharesViewModel.RenameShareCommand);
+                ItemsViewModel.CreateDirectoryCommand, SharesViewModel.AccessShareByIdCommand,
+                SharesViewModel.RenameShareCommand);
         }
 
         public SharesViewModel SharesViewModel { get; }

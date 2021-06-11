@@ -22,7 +22,15 @@
                    HorizontalAlignment="Center" DataContext="{Binding MessageViewModel}"
                    Text="{Binding Message}"
                    Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <Image Grid.Row="2" Source="{Binding Image}" Height="100" Width="100" />
+        <Border Grid.Row="2" Height="100" Width="100" CornerRadius="50" Background="Transparent"
+                BorderBrush="{StaticResource BrushPrimary2}" BorderThickness="1"
+                ContextMenu="{Binding ProfilePhotoContextMenu}">
+            <Ellipse Height="98" Width="98">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill" />
+                </Ellipse.Fill>
+            </Ellipse>
+        </Border>
         <Grid Grid.Row="3" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90" />

@@ -5,11 +5,11 @@ using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    class RenameShareCommand : AsyncCommand
+    internal class RenameShareCommand : AsyncCommand
     {
-        private readonly SharesViewModel _sharesViewModel;
-        private readonly IShareService _shareService;
         private readonly Action _callback;
+        private readonly IShareService _shareService;
+        private readonly SharesViewModel _sharesViewModel;
 
         public RenameShareCommand(SharesViewModel sharesViewModel, IShareService shareService, Action callback)
         {

@@ -13,10 +13,10 @@ namespace WPF.State.Authentication
     {
         private readonly IAccessService _accessService;
         private readonly IItemService _itemService;
+        private readonly IPhotoService _photoService;
         private readonly IShareService _shareService;
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
-        private readonly IPhotoService _photoService;
 
         private AuthenticationResponse _currentAuthenticationResponse;
 

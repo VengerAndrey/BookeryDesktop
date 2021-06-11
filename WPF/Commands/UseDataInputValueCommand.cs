@@ -6,11 +6,11 @@ namespace WPF.Commands
 {
     internal class UseDataInputValueCommand : ICommand
     {
-        private readonly ICommand _createShareCommand;
-        private readonly ICommand _createDirectoryCommand;
         private readonly ICommand _accessShareByIdCommand;
-        private readonly ICommand _renameShareCommand;
+        private readonly ICommand _createDirectoryCommand;
+        private readonly ICommand _createShareCommand;
         private readonly DataInputViewModel _dataInputViewModel;
+        private readonly ICommand _renameShareCommand;
 
         public UseDataInputValueCommand(DataInputViewModel dataInputViewModel, ICommand createShareCommand,
             ICommand createDirectoryCommand, ICommand accessShareByIdCommand, ICommand renameShareCommand)

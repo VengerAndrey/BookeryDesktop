@@ -2,13 +2,12 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using BookeryApi.Exceptions;
 using BookeryApi.Services.User;
 using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    class LoadProfilePhotoCommand : AsyncCommand
+    internal class LoadProfilePhotoCommand : AsyncCommand
     {
         private readonly IPhotoService _photoService;
         private readonly UserViewModel _userViewModel;
@@ -24,7 +23,12 @@ namespace WPF.Commands
             try
             {
                 var content = await _photoService.Get();
-                await using MemoryStream stream = new MemoryStream();
+                if (content is null)
+                {
+                    return;
+                }
+
+                await using var stream = new MemoryStream();
                 var image = new BitmapImage();
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;
@@ -34,11 +38,7 @@ namespace WPF.Commands
                 image.EndInit();
                 _userViewModel.Image = image;
             }
-            catch (DataNotFoundException e)
-            {
-                _userViewModel.MessageViewModel.Message = e.Message;
-            }
-            catch (Exception e)
+            catch (Exception)
             {
                 _userViewModel.MessageViewModel.Message = "Remote service is not available.";
             }
