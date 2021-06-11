@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BookeryApi.Exceptions;
 using BookeryApi.Services.Storage;
 using WPF.ViewModels;
 
@@ -22,9 +23,16 @@ namespace WPF.Commands
         {
             if (parameter is string name)
             {
-                _sharesViewModel.ContextMenuShare.Name = name;
-                await _shareService.Update(_sharesViewModel.ContextMenuShare);
-                _callback();
+                try
+                {
+                    _sharesViewModel.ContextMenuShare.Name = name;
+                    await _shareService.Update(_sharesViewModel.ContextMenuShare);
+                    _callback();
+                }
+                catch (ForbiddenException e)
+                {
+                    _sharesViewModel.MessageViewModel.Message = e.Message;
+                }
             }
         }
     }

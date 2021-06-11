@@ -12,20 +12,21 @@ namespace WPF.State.Authentication
     internal class Authenticator : IAuthenticator
     {
         private readonly IAccessService _accessService;
+        private readonly IAuthenticationService _authenticationService;
         private readonly IItemService _itemService;
         private readonly IPhotoService _photoService;
         private readonly IShareService _shareService;
-        private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
 
         private AuthenticationResponse _currentAuthenticationResponse;
 
         private Timer _timer;
 
-        public Authenticator(ITokenService tokenService, IShareService shareService, IItemService itemService,
+        public Authenticator(IAuthenticationService authenticationService, IShareService shareService,
+            IItemService itemService,
             IUserService userService, IAccessService accessService, IPhotoService photoService)
         {
-            _tokenService = tokenService;
+            _authenticationService = authenticationService;
             _shareService = shareService;
             _itemService = itemService;
             _userService = userService;
@@ -44,8 +45,14 @@ namespace WPF.State.Authentication
             StateChanged?.Invoke();
         }
 
-        public void Logout()
+        public async Task<SignUpResult> SignUp(string email, string username, string password)
         {
+            return await _authenticationService.SignUp(email, username, password);
+        }
+
+        public void LogOut()
+        {
+            _authenticationService.LogOut();
             _timer?.Change(Timeout.Infinite, 0);
             _currentAuthenticationResponse = null;
             StateChanged?.Invoke();
@@ -53,13 +60,13 @@ namespace WPF.State.Authentication
 
         private async Task Authenticate(AuthenticationRequest authenticationRequest)
         {
-            _currentAuthenticationResponse = await _tokenService.GetToken(authenticationRequest);
+            _currentAuthenticationResponse = await _authenticationService.GetToken(authenticationRequest);
             SetBearerTokenToServices();
         }
 
         private async Task RefreshToken()
         {
-            _currentAuthenticationResponse = await _tokenService
+            _currentAuthenticationResponse = await _authenticationService
                 .RefreshToken(_currentAuthenticationResponse.AccessToken, _currentAuthenticationResponse.RefreshToken);
             SetBearerTokenToServices();
         }

@@ -3,11 +3,11 @@
 namespace WPF.Views
 {
     /// <summary>
-    ///     Interaction logic for LoginView.xaml
+    ///     Interaction logic for SignUpView.xaml
     /// </summary>
-    public partial class LoginView : UserControl
+    public partial class SignUpView : UserControl
     {
-        public LoginView()
+        public SignUpView()
         {
             InitializeComponent();
         }

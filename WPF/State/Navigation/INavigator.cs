@@ -11,8 +11,8 @@ namespace WPF.State.Navigation
 
     public enum ViewType
     {
-        Home,
         Login,
+        Home,
         User
     }
 }

@@ -28,7 +28,7 @@ namespace WPF.ViewModels
 
             SetProfilePhotoCommand =
                 new SetProfilePhotoCommand(photoService, () => LoadProfilePhotoCommand.Execute(null));
-            LogoutCommand = new LogoutCommand(authenticator, loginRenavigator);
+            LogOutCommand = new LogOutCommand(authenticator, loginRenavigator);
 
             ProfilePhotoContextMenu = new ProfilePhotoContextMenu(this);
         }
@@ -58,7 +58,7 @@ namespace WPF.ViewModels
         public ICommand LoadUserCommand { get; }
         public ICommand LoadProfilePhotoCommand { get; }
         public ICommand SetProfilePhotoCommand { get; }
-        public ICommand LogoutCommand { get; }
+        public ICommand LogOutCommand { get; }
 
         public ContextMenu ProfilePhotoContextMenu { get; }
     }

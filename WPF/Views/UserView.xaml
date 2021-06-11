@@ -49,6 +49,6 @@
             <TextBox Grid.Column="1" FontSize="16" Text="{Binding User.Username}"
                      IsReadOnly="True" Cursor="Arrow" />
         </Grid>
-        <Button Grid.Row="5" Margin="5" FontSize="16" Content="Log out" Command="{Binding LogoutCommand}" />
+        <Button Grid.Row="5" Margin="5" FontSize="16" Content="Log out" Command="{Binding LogOutCommand}" />
     </Grid>
 </UserControl>

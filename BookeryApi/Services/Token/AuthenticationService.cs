@@ -8,11 +8,11 @@ using Domain.Models.DTOs.Responses;
 
 namespace BookeryApi.Services.Token
 {
-    public class TokenService : ITokenService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly HttpClient _httpClient;
 
-        public TokenService()
+        public AuthenticationService()
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("http://localhost:42396/api/Authentication/");
@@ -49,6 +49,25 @@ namespace BookeryApi.Services.Token
             }
 
             return null;
+        }
+
+        public async Task<SignUpResult> SignUp(string email, string username, string password)
+        {
+            var signUpRequest = new SignUpRequest
+            {
+                Email = email,
+                Username = username,
+                Password = password
+            };
+
+            var response = await _httpClient.PostAsJsonAsync("sign-up", signUpRequest);
+
+            return await response.Content.ReadAsAsync<SignUpResult>();
+        }
+
+        public async Task LogOut()
+        {
+            await _httpClient.PostAsync("log-out", null);
         }
     }
 }

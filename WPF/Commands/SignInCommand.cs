@@ -7,21 +7,21 @@ using WPF.ViewModels;
 
 namespace WPF.Commands
 {
-    internal class LoginCommand : AsyncCommand
+    internal class SignInCommand : AsyncCommand
     {
         private readonly IAuthenticator _authenticator;
-        private readonly LoginViewModel _loginViewModel;
         private readonly IRenavigator _renavigator;
+        private readonly SignInViewModel _signInViewModel;
 
-        public LoginCommand(LoginViewModel loginViewModel, IAuthenticator authenticator, IRenavigator renavigator)
+        public SignInCommand(SignInViewModel signInViewModel, IAuthenticator authenticator, IRenavigator renavigator)
         {
-            _loginViewModel = loginViewModel;
+            _signInViewModel = signInViewModel;
             _authenticator = authenticator;
             _renavigator = renavigator;
 
-            _loginViewModel.PropertyChanged += (sender, e) =>
+            _signInViewModel.PropertyChanged += (sender, e) =>
             {
-                if (e.PropertyName == nameof(LoginViewModel.CanLogin))
+                if (e.PropertyName == nameof(SignInViewModel.CanLogin))
                 {
                     OnCanExecuteChanged();
                 }
@@ -30,24 +30,24 @@ namespace WPF.Commands
 
         public override bool CanExecute(object parameter)
         {
-            return _loginViewModel.CanLogin && base.CanExecute(parameter);
+            return _signInViewModel.CanLogin && base.CanExecute(parameter);
         }
 
         public override async Task ExecuteAsync(object parameter)
         {
             try
             {
-                await _authenticator.Login(_loginViewModel.Email, _loginViewModel.Password);
+                await _authenticator.Login(_signInViewModel.Email, _signInViewModel.Password);
 
                 _renavigator.Renavigate();
             }
             catch (InvalidCredentialException e)
             {
-                _loginViewModel.MessageViewModel.Message = e.Message;
+                _signInViewModel.MessageViewModel.Message = e.Message;
             }
             catch (Exception)
             {
-                _loginViewModel.MessageViewModel.Message = "Remote service is not available.";
+                _signInViewModel.MessageViewModel.Message = "Remote service is not available.";
             }
         }
     }

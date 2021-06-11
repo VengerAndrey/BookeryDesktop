@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Domain.Models.DTOs.Responses;
 
 namespace WPF.State.Authentication
 {
@@ -10,6 +11,8 @@ namespace WPF.State.Authentication
         event Action StateChanged;
 
         Task Login(string email, string password);
-        void Logout();
+        Task<SignUpResult> SignUp(string email, string username, string password);
+
+        void LogOut();
     }
 }

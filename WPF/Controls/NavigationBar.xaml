@@ -12,7 +12,8 @@
                      Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Home}"
                      IsChecked="{Binding CurrentViewModel, Mode=OneWay, 
             Converter={StaticResource ValueToParameterEqualityConverter}, 
-            ConverterParameter={x:Type viewModels:HomeViewModel}}">
+            ConverterParameter={x:Type viewModels:HomeViewModel}}"
+                     IsTabStop="False">
             <RadioButton.Content>
                 <Image Source="../Resources/folder.png" Stretch="UniformToFill" />
             </RadioButton.Content>
@@ -21,7 +22,8 @@
                      Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.User}"
                      IsChecked="{Binding CurrentViewModel, Mode=OneWay, 
             Converter={StaticResource ValueToParameterEqualityConverter}, 
-            ConverterParameter={x:Type viewModels:UserViewModel}}">
+            ConverterParameter={x:Type viewModels:UserViewModel}}"
+                     IsTabStop="False">
             <RadioButton.Content>
                 <Image Source="../Resources/user.png" Stretch="UniformToFill" />
             </RadioButton.Content>

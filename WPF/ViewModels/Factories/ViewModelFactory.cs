@@ -6,10 +6,10 @@ namespace WPF.ViewModels.Factories
     internal class ViewModelFactory : IViewModelFactory
     {
         private readonly CreateViewModel<HomeViewModel> _createHomeViewModel;
-        private readonly CreateViewModel<LoginViewModel> _createLoginViewModel;
+        private readonly CreateViewModel<SignInViewModel> _createLoginViewModel;
         private readonly CreateViewModel<UserViewModel> _createUserViewModel;
 
-        public ViewModelFactory(CreateViewModel<LoginViewModel> createLoginViewModel,
+        public ViewModelFactory(CreateViewModel<SignInViewModel> createLoginViewModel,
             CreateViewModel<HomeViewModel> createHomeViewModel,
             CreateViewModel<UserViewModel> createUserViewModel)
         {

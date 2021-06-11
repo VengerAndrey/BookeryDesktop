@@ -41,7 +41,7 @@ namespace WPF
         protected override async void OnExit(ExitEventArgs e)
         {
             var authenticator = _host.Services.GetRequiredService<IAuthenticator>();
-            authenticator.Logout();
+            authenticator.LogOut();
 
             await _host.StopAsync();
             _host.Dispose();

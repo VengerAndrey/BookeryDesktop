@@ -16,23 +16,30 @@ namespace WPF.HostBuilders
             {
                 services.AddSingleton<HomeViewModel>();
                 services.AddTransient<UserViewModel>();
-
                 services.AddTransient<MainViewModel>();
 
-                services.AddSingleton<CreateViewModel<LoginViewModel>>(serviceProvider => () => new LoginViewModel(
+                services.AddSingleton<CreateViewModel<SignInViewModel>>(serviceProvider => () => new SignInViewModel(
                     serviceProvider.GetRequiredService<IAuthenticator>(),
-                    serviceProvider.GetRequiredService<ViewModelRenavigator<HomeViewModel>>()));
+                    serviceProvider.GetRequiredService<ViewModelRenavigator<HomeViewModel>>(),
+                    serviceProvider.GetRequiredService<ViewModelRenavigator<SignUpViewModel>>()));
+
+                services.AddSingleton<CreateViewModel<SignUpViewModel>>(serviceProvider => () => new SignUpViewModel(
+                    serviceProvider.GetRequiredService<IAuthenticator>(),
+                    serviceProvider.GetRequiredService<ViewModelRenavigator<SignInViewModel>>()));
+
                 services.AddSingleton<CreateViewModel<HomeViewModel>>(serviceProvider =>
                     serviceProvider.GetRequiredService<HomeViewModel>);
+
                 services.AddSingleton<CreateViewModel<UserViewModel>>(serviceProvider => () => new UserViewModel(
                     serviceProvider.GetRequiredService<IAuthenticator>(),
-                    serviceProvider.GetRequiredService<ViewModelRenavigator<LoginViewModel>>(),
+                    serviceProvider.GetRequiredService<ViewModelRenavigator<SignInViewModel>>(),
                     serviceProvider.GetRequiredService<IUserService>(),
                     serviceProvider.GetRequiredService<IPhotoService>()));
 
                 services.AddSingleton<IViewModelFactory, ViewModelFactory>();
 
-                services.AddSingleton<ViewModelRenavigator<LoginViewModel>>();
+                services.AddSingleton<ViewModelRenavigator<SignInViewModel>>();
+                services.AddSingleton<ViewModelRenavigator<SignUpViewModel>>();
                 services.AddSingleton<ViewModelRenavigator<HomeViewModel>>();
             });
 

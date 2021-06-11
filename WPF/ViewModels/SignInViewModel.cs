@@ -5,17 +5,19 @@ using WPF.State.Navigation;
 
 namespace WPF.ViewModels
 {
-    internal class LoginViewModel : BaseViewModel
+    internal class SignInViewModel : BaseViewModel
     {
         private string _email = "email@gmail.com";
 
         private string _password = "123";
 
-        public LoginViewModel(IAuthenticator authenticator, IRenavigator loginRenavigator)
+        public SignInViewModel(IAuthenticator authenticator, IRenavigator homeRenavigator,
+            IRenavigator signUpRenavigator)
         {
             MessageViewModel = new MessageViewModel();
 
-            LoginCommand = new LoginCommand(this, authenticator, loginRenavigator);
+            SignInCommand = new SignInCommand(this, authenticator, homeRenavigator);
+            ViewSignUpCommand = new RenavigateCommand(signUpRenavigator);
         }
 
         public MessageViewModel MessageViewModel { get; }
@@ -42,7 +44,8 @@ namespace WPF.ViewModels
             }
         }
 
-        public ICommand LoginCommand { get; set; }
+        public ICommand SignInCommand { get; set; }
+        public ICommand ViewSignUpCommand { get; set; }
 
         public bool CanLogin => !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password);
     }

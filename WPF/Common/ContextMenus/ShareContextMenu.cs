@@ -9,14 +9,14 @@ namespace WPF.Common.ContextMenus
     {
         public ShareContextMenu(SharesViewModel sharesViewModel, Share caller)
         {
-            var deleteShare = new MenuItem
+            var copyShareId = new MenuItem
             {
-                Header = "Delete",
-                Command = sharesViewModel.DeleteShareCommand,
+                Header = "Copy ID",
+                Command = sharesViewModel.CopyShareIdCommand,
                 CommandParameter = caller,
                 Icon = new Image
                 {
-                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Delete)
+                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Share)
                 },
                 Style = Application.Current.FindResource("StyleContextMenuItem") as Style
             };
@@ -31,21 +31,21 @@ namespace WPF.Common.ContextMenus
                 },
                 Style = Application.Current.FindResource("StyleContextMenuItem") as Style
             };
-            var copyShareId = new MenuItem
+            var deleteShare = new MenuItem
             {
-                Header = "Copy ID",
-                Command = sharesViewModel.CopyShareIdCommand,
+                Header = "Delete",
+                Command = sharesViewModel.DeleteShareCommand,
                 CommandParameter = caller,
                 Icon = new Image
                 {
-                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Share)
+                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Delete)
                 },
                 Style = Application.Current.FindResource("StyleContextMenuItem") as Style
             };
 
-            Items.Add(deleteShare);
-            Items.Add(renameShare);
             Items.Add(copyShareId);
+            Items.Add(renameShare);
+            Items.Add(deleteShare);
 
             Style = Application.Current.FindResource("StyleContextMenu") as Style;
         }

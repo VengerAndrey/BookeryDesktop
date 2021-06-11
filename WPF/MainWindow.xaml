@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:WPF.Controls"
         mc:Ignorable="d"
-        Title="Bookery" Height="450" Width="800">
+        Title="Bookery" Height="600" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -21,8 +21,9 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <controls:NavigationBar />
+            <controls:NavigationBar KeyboardNavigation.TabNavigation="None" IsTabStop="False" />
         </Grid>
-        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" />
+        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"
+                        KeyboardNavigation.TabNavigation="None" IsTabStop="False" />
     </Grid>
 </Window>

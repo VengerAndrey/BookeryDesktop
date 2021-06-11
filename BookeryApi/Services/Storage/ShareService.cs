@@ -72,6 +72,11 @@ namespace BookeryApi.Services.Storage
                 return updatedShare;
             }
 
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                throw new ForbiddenException();
+            }
+
             return null;
         }
 

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WPF.Views.LoginView"
+﻿<UserControl x:Class="WPF.Views.SignInView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -23,6 +23,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="10">
                     <Grid.ColumnDefinitions>
@@ -42,9 +43,11 @@
                              Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
                 <Button Grid.Row="2" Margin="5" FontSize="16"
-                        Content="Login" Command="{Binding LoginCommand}"
+                        Content="Login" Command="{Binding SignInCommand}"
                         IsDefault="True" />
-                <TextBlock Grid.Row="3" Margin="10" Foreground="{StaticResource BrushError}" FontSize="16"
+                <Button Grid.Row="3" Margin="5" FontSize="14" Background="Transparent" Foreground="Blue"
+                        Content="Sign up" Command="{Binding ViewSignUpCommand}" />
+                <TextBlock Grid.Row="4" Margin="10" Foreground="{StaticResource BrushError}" FontSize="16"
                            HorizontalAlignment="Center" DataContext="{Binding MessageViewModel}"
                            Text="{Binding Message}"
                            Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
