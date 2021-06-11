@@ -13,16 +13,18 @@ namespace WPF.Controls
     {
         private readonly ICommand _loadItemsCommand;
         private readonly ICommand _openFileCommand;
+        private readonly ICommand _updateContextMenuItemCommand;
         private readonly ICommand _updateCurrentItemCommand;
 
-        public ItemControl(Item item, ICommand loadItemsCommand, ICommand updateCurrentItemCommand,
-            ICommand openFileCommand)
+        public ItemControl(Item item, ICommand loadItemsCommand, ICommand openFileCommand,
+            ICommand updateCurrentItemCommand, ICommand updateContextMenuItemCommand)
         {
             Item = item;
             Image = ItemImageHelper.GetImage(item);
             _loadItemsCommand = loadItemsCommand;
             _updateCurrentItemCommand = updateCurrentItemCommand;
             _openFileCommand = openFileCommand;
+            _updateContextMenuItemCommand = updateContextMenuItemCommand;
             InitializeComponent();
         }
 
@@ -40,6 +42,11 @@ namespace WPF.Controls
             {
                 _openFileCommand.Execute(Item);
             }
+        }
+
+        private void ItemControl_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _updateContextMenuItemCommand.Execute(Item);
         }
     }
 }

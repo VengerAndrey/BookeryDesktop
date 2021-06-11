@@ -21,7 +21,7 @@ namespace WPF.ViewModels
 
             DataInputCommand = new UseDataInputValueCommand(DataInputViewModel, SharesViewModel.CreateShareCommand,
                 ItemsViewModel.CreateDirectoryCommand, SharesViewModel.AccessShareByIdCommand,
-                SharesViewModel.RenameShareCommand);
+                SharesViewModel.RenameShareCommand, ItemsViewModel.RenameFileCommand);
         }
 
         public SharesViewModel SharesViewModel { get; }

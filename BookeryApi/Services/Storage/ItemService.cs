@@ -60,6 +60,20 @@ namespace BookeryApi.Services.Storage
             return null;
         }
 
+        public async Task<Item> RenameFile(string path, string name)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"rename-file/{path}", name);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsAsync<Item>();
+
+                return result;
+            }
+
+            return null;
+        }
+
         public async Task<Item> UploadFile(string path, MultipartFormDataContent content)
         {
             var response = await _httpClient.PostAsync($"upload-file/{path}", content);

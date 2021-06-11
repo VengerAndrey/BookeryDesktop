@@ -10,16 +10,19 @@ namespace WPF.Commands
         private readonly ICommand _createDirectoryCommand;
         private readonly ICommand _createShareCommand;
         private readonly DataInputViewModel _dataInputViewModel;
+        private readonly ICommand _renameFileCommand;
         private readonly ICommand _renameShareCommand;
 
         public UseDataInputValueCommand(DataInputViewModel dataInputViewModel, ICommand createShareCommand,
-            ICommand createDirectoryCommand, ICommand accessShareByIdCommand, ICommand renameShareCommand)
+            ICommand createDirectoryCommand, ICommand accessShareByIdCommand, ICommand renameShareCommand,
+            ICommand renameFileCommand)
         {
             _dataInputViewModel = dataInputViewModel;
             _createShareCommand = createShareCommand;
             _createDirectoryCommand = createDirectoryCommand;
             _accessShareByIdCommand = accessShareByIdCommand;
             _renameShareCommand = renameShareCommand;
+            _renameFileCommand = renameFileCommand;
         }
 
         public bool CanExecute(object parameter)
@@ -42,6 +45,9 @@ namespace WPF.Commands
                     break;
                 case DataInputType.RenameShare:
                     _renameShareCommand.Execute(parameter);
+                    break;
+                case DataInputType.RenameFile:
+                    _renameFileCommand.Execute(parameter);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

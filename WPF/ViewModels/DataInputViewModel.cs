@@ -57,6 +57,9 @@ namespace WPF.ViewModels
                 case DataInputType.AccessShareById:
                     Name = "Enter course id:";
                     break;
+                case DataInputType.RenameFile:
+                    Name = "Enter file name:";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dataInputType), dataInputType, null);
             }
@@ -68,6 +71,7 @@ namespace WPF.ViewModels
         CreateShare,
         CreateDirectory,
         AccessShareById,
-        RenameShare
+        RenameShare,
+        RenameFile
     }
 }

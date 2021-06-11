@@ -20,6 +20,17 @@ namespace WPF.Common.ContextMenus
                 },
                 Style = Application.Current.FindResource("StyleContextMenuItem") as Style
             };
+            var rename = new MenuItem
+            {
+                Header = "Rename",
+                Command = itemsViewModel.OpenDataInputCommand,
+                CommandParameter = DataInputType.RenameFile,
+                Icon = new Image
+                {
+                    Source = ContextMenuItemIconHelper.GetImage(ContextMenuIconName.Rename)
+                },
+                Style = Application.Current.FindResource("StyleContextMenuItem") as Style
+            };
             var delete = new MenuItem
             {
                 Header = "Delete",
@@ -33,6 +44,7 @@ namespace WPF.Common.ContextMenus
             };
 
             Items.Add(download);
+            Items.Add(rename);
             Items.Add(delete);
 
             Style = Application.Current.FindResource("StyleContextMenu") as Style;

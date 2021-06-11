@@ -11,6 +11,7 @@ namespace BookeryApi.Services.Storage
         Task<Item> GetItem(string path);
         Task<List<Item>> GetSubItems(string path);
         Task<Item> CreateDirectory(string path);
+        Task<Item> RenameFile(string path, string name);
         Task<Item> UploadFile(string path, MultipartFormDataContent content);
         Task<Stream> DownloadFile(string path);
         Task<bool> Delete(string path);
