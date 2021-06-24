@@ -19,7 +19,7 @@ namespace WPF.ViewModels
             MessageViewModel = new MessageViewModel();
 
             SignUpCommand = new SignUpCommand(this, authenticator, signInRenavigator);
-            ViewLoginCommand = new RenavigateCommand(signInRenavigator);
+            ViewSignInCommand = new RenavigateCommand(signInRenavigator);
         }
 
         public string Email
@@ -73,7 +73,7 @@ namespace WPF.ViewModels
                                  Password == ConfirmPassword;
 
         public ICommand SignUpCommand { get; }
-        public ICommand ViewLoginCommand { get; }
+        public ICommand ViewSignInCommand { get; }
 
         public MessageViewModel MessageViewModel { get; }
     }

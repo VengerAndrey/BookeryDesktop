@@ -66,7 +66,7 @@
                         Content="Sign up" Command="{Binding SignUpCommand}"
                         IsDefault="True" />
                 <Button Grid.Row="5" Margin="5" FontSize="14" Background="Transparent" Foreground="Blue"
-                        Content="Sign in" Command="{Binding ViewLoginCommand}" />
+                        Content="Sign in" Command="{Binding ViewSignInCommand}" />
                 <TextBlock Grid.Row="6" Margin="10" Foreground="{StaticResource BrushError}" FontSize="16"
                            HorizontalAlignment="Center" DataContext="{Binding MessageViewModel}"
                            Text="{Binding Message}"
