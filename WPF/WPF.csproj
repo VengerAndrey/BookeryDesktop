@@ -79,11 +79,11 @@
     <Resource Include="Resources\noFiles.png" />
     <Resource Include="Resources\user.png" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+   </ItemGroup>
 
 </Project>
